@@ -378,7 +378,7 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
       </div>
       
       <!-- iPhone message bubbles -->
-      <div class="iphone-msg" id="iphone-msgs" style="min-height:60px;margin-bottom:8px;max-height:120px;overflow-y:auto;"></div>
+      <div class="iphone-msg" id="iphone-msgs" style="min-height:60px;margin-bottom:8px;"></div>
       
       </div>
       
@@ -891,23 +891,6 @@ setTimeout(()=>{
   const sp=localStorage.getItem('wf_sp');if(sp){document.getElementById('spotify-url').value=sp;embedSpotify();}
 },1000);
 </script>
-
-<div class="ipod-wheel">
-    <button class="ipod-btn" onclick="playPrev()" style="color:#333;font-weight:bold;">⏮</button>
-    <button class="ipod-btn" id="ipod-play" onclick="playYT()" style="color:#333;font-weight:bold;">▶</button>
-    <button class="ipod-btn" onclick="playNext()" style="color:#333;font-weight:bold;">⏭</button>
-  </div>
-  <div class="ipod-url-bar">
-    <input type="text" id="yt-url" placeholder="youtube.com/watch?v=..." onkeydown="if(event.key==='Enter')playYT()">
-    <button class="ipod-btn" onclick="playYT()" style="font-size:10px;color:#333;font-weight:bold;">GO</button>
-  </div>
-</div>
-<div style="text-align:center;margin-top:6px;display:flex;gap:6px;justify-content:center;" id="game-btns">
-  <button class="game-btn gba" onclick="emojiDrop()" id="btn-emoji">💖 EMOJI DROP</button>
-  <button class="game-btn gbb" onclick="spawnPostIt()" id="btn-postit">📝 POST-IT</button>
-  <button class="game-btn gbc" onclick="toggleSky()" id="btn-sky">☀️ LIGHT</button>
-</div>
-</div>
 
 </body>
 </html>
