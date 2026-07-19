@@ -12,6 +12,7 @@
 /* ════════════════════════════════════════════════════════════
    WebFRIENDS v12.0 — Anime 90s / Gyaru / KiraKira / Desktop
    ════════════════════════════════════════════════════════════ */
+html,body{overflow:visible!important;contain:none!important;transform:none!important;will-change:auto!important;}
 :root{
   --pink:#ff1493;--pink2:#ff69b4;--pink3:#ffb6c1;--cyan:#0ff;--cyan2:#40e0d0;--lime:#cf0;--lime2:#adff2f;
   --purple:#c471ed;--purple2:#da70d6;--lav:#b088d0;--orange:#ff8c00;--red:#ff0040;--gold:#ffd700;
@@ -21,7 +22,7 @@
   --mspaint:inset -2px -2px #0a0a0a,inset 2px 2px #fff,inset -3px -3px #808080,inset 3px 3px #dfdfdf;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-html{overflow:hidden;height:100%;}
+html{height:100%;}
 body{
   font-family:'VT323',monospace;
   background:linear-gradient(135deg,var(--bg),var(--bg2),var(--bg3),var(--bg),var(--bg2));
@@ -107,7 +108,7 @@ body{
 .start-item span{font-size:14px;}
 
 /* ── MAIN CONTENT ── */
-#app-main{flex:1;overflow-y:auto;overflow-x:hidden;padding:8px;margin-left:185px;}
+#app-main{position:absolute;left:185px;top:0;right:0;bottom:0;overflow-y:auto;overflow-x:hidden;padding:8px;}
 
 /* ── SKY BACKGROUND TOGGLE ── */
 body.sky #star-cnv{opacity:.5;}
@@ -131,14 +132,14 @@ body.sky .start-item:hover{background:rgba(255,105,180,.15);}
 .film-polaroid .fp-cap{font-family:'Comic Sans MS',cursive;font-size:8px;color:#888;text-align:center;margin-top:3px;}
 
 /* ── DESKTOP POLAROIDS (album + user cards) ── */
-.desk-polaroid{background:#fff;padding:4px 4px 16px 4px;box-shadow:3px 4px 7px rgba(0,0,0,.25);transform:rotate(var(--r));cursor:pointer;z-index:10;transition:transform .2s;border:1px solid #eee;min-width:70px;min-height:60px;}
+.desk-polaroid{position:fixed!important;background:#fff;padding:4px 4px 16px 4px;box-shadow:3px 4px 7px rgba(0,0,0,.25);transform:rotate(var(--r));cursor:pointer;z-index:10;transition:transform .2s;border:1px solid #eee;min-width:70px;min-height:60px;}
 .desk-polaroid:hover{transform:rotate(var(--r)) scale(1.08);z-index:20;}
 .desk-polaroid .dp-img{width:80px;height:auto;max-height:90px;object-fit:contain;display:block;background:linear-gradient(135deg,#f0f0f0,#e0e0e0);}
 .desk-polaroid .dp-cap{font-family:'Comic Sans MS',cursive;font-size:8px;color:#666;text-align:center;margin-top:2px;}
 .desk-polaroid .dp-user{font-family:'Silkscreen',monospace;font-size:6px;color:var(--pink);text-align:center;}
 
 /* ── USER PAINT CARD ── */
-.user-card{background:linear-gradient(180deg,#fff,#ffe4e1);border:3px solid;border-color:#fff var(--pink) var(--pink) #fff;box-shadow:var(--mspaint),2px 2px 8px rgba(0,0,0,.2);padding:4px;text-align:center;width:90px;cursor:pointer;z-index:10;transition:transform .2s;min-height:80px;}
+.user-card{position:fixed!important;background:linear-gradient(180deg,#fff,#ffe4e1);border:3px solid;border-color:#fff var(--pink) var(--pink) #fff;box-shadow:var(--mspaint),2px 2px 8px rgba(0,0,0,.2);padding:4px;text-align:center;width:90px;cursor:pointer;z-index:10;transition:transform .2s;min-height:80px;}
 .user-card:hover{transform:scale(1.1);z-index:20;}
 .user-card .uc-avatar{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto;border:2px solid var(--pink);color:#fff;}
 .user-card .uc-name{font-family:'Silkscreen',monospace;font-size:7px;color:var(--pink);margin-top:3px;}
@@ -241,11 +242,11 @@ body.sky .start-item:hover{background:rgba(255,105,180,.15);}
 .sb-toggle{position:fixed;left:0;top:50%;z-index:955;background:var(--pink);border:2px solid rgba(255,255,255,.4);border-left:none;border-radius:0 6px 6px 0;width:14px;height:50px;cursor:pointer;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;writing-mode:vertical-lr;font-family:'Silkscreen',monospace;transition:all .2s;box-shadow:2px 0 8px rgba(255,20,147,.3);}
 .sb-toggle:hover{background:var(--pink2);}
 body.sb-hidden #sidebar{transform:translateX(-185px);}
-body.sb-hidden #app-main{margin-left:0;}
+body.sb-hidden #app-main{left:0;}
 body.sb-hidden .sb-toggle{left:0;}
 body.sb-hidden #start-menu{left:0;margin-left:10px;}
 #sidebar{transition:transform .3s ease;}
-#app-main{transition:margin-left .3s ease;}
+#app-main{transition:left .3s ease;}
 
 /* ── AUDIT: better contrast ── */
 .w-popup .w-body{background:#fff;color:#111;}
@@ -369,19 +370,41 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
 <div id="app-main">
 
   <!-- VIEW: HOME / DESKTOP (padded for fixed iPod) -->
-  <div id="view-home" class="view-panel active" style="padding-bottom:330px;">
-    <div id="desktop-area" style="position:relative;min-height:calc(100vh - 60px);">
+  <div id="view-home" class="view-panel active">
+    <div id="desktop-area" style="position:relative;height:calc(100vh - 60px);overflow:hidden;">
       <!-- GIF Polaroid Filmstrip -->
       <div class="filmstrip-wrap">
         <div class="filmstrip-track" id="filmstrip-track"></div>
       </div>
       
       <!-- iPhone message bubbles -->
-      <div class="iphone-msg" id="iphone-msgs" style="min-height:60px;margin-bottom:8px;"></div>
+      <div class="iphone-msg" id="iphone-msgs" style="min-height:60px;margin-bottom:8px;max-height:120px;overflow-y:auto;"></div>
       
       </div>
       
-    </div>
+    <!-- iPod player (inside desktop-area) -->
+<div id="ipod-anchor" style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);z-index:500;display:flex;flex-direction:column;align-items:center;max-width:min(360px, calc(100vw - 220px));padding:12px 0 8px;">
+<div class="ipod-player">
+  <div class="ipod-label">✦ WebFRIENDS iPod ✦</div>
+  <div class="ipod-screen" id="ipod-screen">
+    <div style="color:#0f0;text-align:center;font-family:'Silkscreen',monospace;font-size:10px;">♪<br>PASTE<br>YOUTUBE<br>URL<br>♪</div>
+  </div>
+  <div class="ipod-wheel">
+    <button class="ipod-btn" onclick="playPrev()" style="color:#333;font-weight:bold;">⏮</button>
+    <button class="ipod-btn" id="ipod-play" onclick="playYT()" style="color:#333;font-weight:bold;">▶</button>
+    <button class="ipod-btn" onclick="playNext()" style="color:#333;font-weight:bold;">⏭</button>
+  </div>
+  <div class="ipod-url-bar">
+    <input type="text" id="yt-url" placeholder="youtube.com/watch?v=..." onkeydown="if(event.key==='Enter')playYT()">
+    <button class="ipod-btn" onclick="playYT()" style="font-size:10px;color:#333;font-weight:bold;">GO</button>
+  </div>
+</div>
+<div style="text-align:center;margin-top:6px;display:flex;gap:6px;justify-content:center;" id="game-btns">
+  <button class="game-btn gba" onclick="emojiDrop()" id="btn-emoji">💖 EMOJI DROP</button>
+  <button class="game-btn gbb" onclick="spawnPostIt()" id="btn-postit">📝 POST-IT</button>
+  <button class="game-btn gbc" onclick="toggleSky()" id="btn-sky">☀️ LIGHT</button>
+</div>
+</div></div>
   </div>
 
 <!-- ═══ LEFT SIDEBAR ═══ -->
@@ -507,7 +530,7 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
       <div style="margin-top:6px;">INSERT COIN</div>
       <div style="font-size:7px;color:var(--pink2);margin-top:4px;">leaderboards coming soon</div>
     </div>
-  </div>
+</div>
 
 </div>
 
@@ -712,7 +735,7 @@ setTimeout(checkSession,500);
 setTimeout(checkSession,300);
 function toast(m,d=2500){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',d);}
 function initStars(){const c=document.getElementById('star-cnv'),ctx=c.getContext('2d');c.width=window.innerWidth;c.height=window.innerHeight;const s=[];for(let i=0;i<80;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:.5+Math.random()*2,c:['#ff1493','#0ff','#cf0','#fff','#da70d6'][i%5],sp:.005+.01*Math.random(),a:Math.random()*Math.PI*2});function draw(){ctx.clearRect(0,0,c.width,c.height);s.forEach(p=>{p.a+=p.sp;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.c;ctx.globalAlpha=.3+.7*Math.abs(Math.sin(p.a));ctx.fill();});ctx.globalAlpha=1;requestAnimationFrame(draw);}draw();}
-function initSparkles(){const cl=['#ff1493','#0ff','#cf0','#da70d6','#ffd700','#fff','#ff69b4','#40e0d0'];for(let i=0;i<35;i++){const d=document.createElement('div');d.className='sparkle';d.style.left=Math.random()*100+'%';d.style.top=Math.random()*100+'%';d.style.background=cl[i%8];d.style.setProperty('--d',(1.2+Math.random()*3)+'s');d.style.setProperty('--c',cl[i%8]);d.style.animationDelay=Math.random()*4+'s';document.body.appendChild(d);}}
+function initSparkles(){const cl=['#ff1493','#0ff','#cf0','#da70d6','#ffd700','#fff','#ff69b4','#40e0d0'];for(let i=0;i<35;i++){const d=document.createElement('div');d.className='sparkle';d.style.left=Math.random()*100+'%';d.style.top=Math.random()*100+'%';d.style.background=cl[i%8];d.style.setProperty('--d',(1.2+Math.random()*3)+'s');d.style.setProperty('--c',cl[i%8]);d.style.animationDelay=Math.random()*4+'s';document.getElementById('desktop-area').appendChild(d);}}
 function initTape(){for(let i=0;i<5;i++){const t=document.createElement('div');t.className='tape-strip';t.style.left=(5+Math.random()*85)+'%';t.style.top=(8+Math.random()*80)+'%';t.style.width=(40+Math.random()*80)+'px';t.style.setProperty('--r',((Math.random()*10)-5)+'deg');document.body.appendChild(t);}}
 function updateClock(){document.getElementById('tb-clock').textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}setInterval(updateClock,1000);updateClock();
 function toggleStart(){document.getElementById('start-menu').classList.toggle('open');}document.addEventListener('click',e=>{if(!e.target.closest('#start-menu')&&!e.target.closest('.sb-start'))document.getElementById('start-menu').classList.remove('open');});
@@ -833,21 +856,21 @@ function updateDeskItems(){
   const placed=[];
   function ov(x,y,w,h){return placed.some(p=>Math.abs(x-p.x)<(w+p.w)/2+15&&Math.abs(y-p.y)<(h+p.h)/2+15);}
   EU.forEach((u,i)=>{
-    const card=document.createElement('div');card.className='user-card desk-card';card.style.position='fixed';card.style.pointerEvents='all';
+    const card=document.createElement('div');card.className='user-card desk-card';card.style.position='absolute';card.style.pointerEvents='all';
     let x,y;
     if(i===0){x=sw+3;y=135;}else if(i===1){x=sw+3;y=245;}else if(i===2){x=sw+3;y=355;}
     else{const zone=i%2===0?L:R;let tries=0;do{x=zone.x1+Math.random()*Math.max(0,zone.x2-zone.x1);y=zone.y1+Math.random()*Math.max(0,zone.y2-zone.y1);tries++;}while(ov(x,y,95,105)&&tries<30);}
     placed.push({x,y,w:95,h:105});
     card.style.left=x+'px';card.style.top=y+'px';card.style.zIndex='55';
     card.innerHTML='<div class="uc-status"></div><img src="'+u.img+'" style="width:50px;height:50px;object-fit:cover;border-radius:50%;border:2px solid var(--pink);display:block;margin:0 auto;background:linear-gradient(135deg,var(--pink),var(--cyan));"><div class="uc-name">@'+u.name+'</div><div class="uc-title">'+u.title+'</div>';
-    card.addEventListener('mousedown',userCardDrag);document.body.appendChild(card);
+    card.addEventListener('mousedown',userCardDrag);document.getElementById('desktop-area').appendChild(card);
   });
   corkPhotos.slice(-6).forEach((p,i)=>{
-    const d=document.createElement('div');d.className='desk-polaroid desk-card';d.style.position='fixed';d.style.pointerEvents='all';
+    const d=document.createElement('div');d.className='desk-polaroid desk-card';d.style.position='absolute';d.style.pointerEvents='all';
     const maxX=icx-iw/2-110;const x=Math.min(sw+120+(i*100)%400,maxX);const y=260+(i*60)%(iy-340);
     d.style.left=x+'px';d.style.top=y+'px';d.style.zIndex='50';d.style.setProperty('--r',((i%5)-2)*3+'deg');
     d.innerHTML='<img class="dp-img" src="'+p.src+'"><div class="dp-cap">'+(p.caption||p.date||'recent')+'</div>';
-    d.addEventListener('mousedown',deskPolaroidDrag);d.addEventListener('dblclick',()=>navigateTo('view-album'));document.body.appendChild(d);
+    d.addEventListener('mousedown',deskPolaroidDrag);d.addEventListener('dblclick',()=>navigateTo('view-album'));document.getElementById('desktop-area').appendChild(d);
   });
 }
 function userCardDrag(e){const card=e.target.closest('.user-card');if(!card)return;card.style.zIndex=75;const ox=e.clientX-card.offsetLeft,oy=e.clientY-card.offsetTop;function mv(ev){card.style.left=(ev.clientX-ox)+'px';card.style.top=(ev.clientY-oy)+'px';}function up(){card.style.zIndex=55;document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);}document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);}
@@ -869,14 +892,7 @@ setTimeout(()=>{
 },1000);
 </script>
 
-<!-- iPod player (body level, fixed to viewport) -->
-<div id="ipod-anchor" style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);margin-left:92px;z-index:500;display:flex;flex-direction:column;align-items:center;max-width:min(360px, calc(100vw - 220px));padding:12px 0 8px;background:linear-gradient(180deg,transparent,rgba(10,0,20,.95) 25%);">
-<div class="ipod-player">
-  <div class="ipod-label">✦ WebFRIENDS iPod ✦</div>
-  <div class="ipod-screen" id="ipod-screen">
-    <div style="color:#0f0;text-align:center;font-family:'Silkscreen',monospace;font-size:10px;">♪<br>PASTE<br>YOUTUBE<br>URL<br>♪</div>
-  </div>
-  <div class="ipod-wheel">
+<div class="ipod-wheel">
     <button class="ipod-btn" onclick="playPrev()" style="color:#333;font-weight:bold;">⏮</button>
     <button class="ipod-btn" id="ipod-play" onclick="playYT()" style="color:#333;font-weight:bold;">▶</button>
     <button class="ipod-btn" onclick="playNext()" style="color:#333;font-weight:bold;">⏭</button>
