@@ -12,6 +12,7 @@
 /* ════════════════════════════════════════════════════════════
    WebFRIENDS v12.0 — Anime 90s / Gyaru / KiraKira / Desktop
    ════════════════════════════════════════════════════════════ */
+html,body{overflow:visible!important;contain:none!important;transform:none!important;will-change:auto!important;}
 :root{
   --pink:#ff1493;--pink2:#ff69b4;--pink3:#ffb6c1;--cyan:#0ff;--cyan2:#40e0d0;--lime:#cf0;--lime2:#adff2f;
   --purple:#c471ed;--purple2:#da70d6;--lav:#b088d0;--orange:#ff8c00;--red:#ff0040;--gold:#ffd700;
@@ -108,7 +109,7 @@ body{
 .start-item span{font-size:14px;}
 
 /* ── MAIN CONTENT ── */
-#app-main{flex:1;overflow-y:auto;overflow-x:hidden;padding:8px;margin-left:185px;}
+#app-main{flex:1;margin-left:185px!important;width:calc(100% - 185px)!important;overflow-y:auto;overflow-x:hidden!important;padding:8px;box-sizing:border-box;min-width:0;}
 
 /* ── SKY BACKGROUND TOGGLE ── */
 body.sky #star-cnv{opacity:.5;}
@@ -201,12 +202,9 @@ body.sky .start-item:hover{background:rgba(255,105,180,.15);}
 /* ── VIEW PANELS ── */
 .view-panel{display:none;min-height:100%;}
 .view-panel.active{display:block;}
-#view-avatar,#view-hub,#view-food,#view-blog,#view-postit,#view-calendar,#view-album{padding-left:190px;}
-#view-home{padding-left:0!important;}
-body.sb-hidden .view-panel{padding-left:0!important;}
 
 /* ── MS PAINT WINDOW ── */
-.paint-window{max-width:100%;background:#fff;border:3px solid;border-color:#fff var(--pink) var(--pink) #fff;border-radius:0;box-shadow:var(--mspaint);margin-bottom:10px;overflow:hidden;}
+.paint-window{background:#fff;border:3px solid;border-color:#fff var(--pink) var(--pink) #fff;border-radius:0;box-shadow:var(--mspaint);margin-bottom:10px;overflow:hidden;}
 .paint-bar{background:linear-gradient(180deg,var(--pink3),var(--pink2),var(--pink));padding:4px 10px;color:#fff;font-family:'MS Sans Serif',Tahoma,sans-serif;font-size:10px;font-weight:bold;display:flex;align-items:center;gap:8px;text-shadow:0 1px 2px rgba(0,0,0,.3);}
 .paint-bar .pb-close{margin-left:auto;background:var(--red);border:1px solid #fff;color:#fff;width:18px;height:18px;font-size:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .paint-body{padding:12px;min-height:120px;background:linear-gradient(135deg,#fff,#f8f0ff);}
@@ -245,11 +243,11 @@ body.sb-hidden .view-panel{padding-left:0!important;}
 .sb-toggle{position:fixed;left:0;top:50%;z-index:955;background:var(--pink);border:2px solid rgba(255,255,255,.4);border-left:none;border-radius:0 6px 6px 0;width:14px;height:50px;cursor:pointer;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;writing-mode:vertical-lr;font-family:'Silkscreen',monospace;transition:all .2s;box-shadow:2px 0 8px rgba(255,20,147,.3);}
 .sb-toggle:hover{background:var(--pink2);}
 body.sb-hidden #sidebar{transform:translateX(-185px);}
-body.sb-hidden #app-main{margin-left:0;}
+body.sb-hidden #app-main{margin-left:0!important;width:100%!important;}
 body.sb-hidden .sb-toggle{left:0;}
 body.sb-hidden #start-menu{left:0;margin-left:10px;}
 #sidebar{transition:transform .3s ease;}
-#app-main{transition:margin-left .3s ease;}
+#app-main{transition:margin-left .3s ease, width .3s ease;}
 
 /* ── AUDIT: better contrast ── */
 .w-popup .w-body{background:#fff;color:#111;}
@@ -273,11 +271,11 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
 @keyframes sPop{0%{transform:scale(0);opacity:0;}70%{transform:scale(1.15);}100%{transform:scale(1);opacity:1;}}
 
 /* ── AVATAR STUDIO ── */
-.av-studio{display:flex;gap:8px;min-height:100%;max-width:100%;overflow-x:hidden;}
-.av-preview{flex:1 1 280px;max-width:340px;min-width:250px;background:var(--panel);border:3px solid var(--pink);border-radius:12px;padding:12px;text-align:center;box-shadow:var(--shadow);position:relative;}
-.av-doll{position:relative;max-width:260px;width:100%;height:420px;margin:0 auto;overflow:hidden;}
+.av-studio{display:flex;gap:12px;min-height:100%;}
+.av-preview{flex:0 0 340px;background:var(--panel);border:3px solid var(--pink);border-radius:12px;padding:12px;text-align:center;box-shadow:var(--shadow);position:relative;}
+.av-doll{position:relative;width:260px;height:420px;margin:0 auto;overflow:hidden;}
 .av-doll img{position:absolute;image-rendering:pixelated;}
-.av-controls{flex:1 1 200px;min-width:0;background:var(--panel);border:3px solid rgba(255,20,147,.25);border-radius:12px;padding:12px;overflow-y:auto;max-height:calc(100vh - 60px);}
+.av-controls{flex:1;background:var(--panel);border:3px solid rgba(255,20,147,.25);border-radius:12px;padding:12px;overflow-y:auto;max-height:calc(100vh - 60px);}
 .av-gender-row{display:flex;gap:4px;justify-content:center;margin-bottom:10px;}
 .av-g-btn{background:rgba(255,255,255,.04);border:2px solid rgba(255,20,147,.2);color:var(--txt2);padding:6px 14px;cursor:pointer;font-family:'Silkscreen',monospace;font-size:8px;border-radius:6px;transition:all .1s;}
 .av-g-btn:hover{border-color:var(--pink);color:var(--txt);}
@@ -302,8 +300,8 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
 .fanzine-card{background:linear-gradient(135deg,rgba(255,182,193,.15),rgba(255,105,180,.1));border:2px dashed var(--pink);border-radius:12px;padding:10px;margin-bottom:6px;}
 
 /* ── CORK + ARCADE ── */
-.cork{max-width:100%;background:linear-gradient(135deg,#8B6914,#A0782C,#7A5A12);border:6px solid #3a1a0a;padding:16px;min-height:280px;position:relative;box-shadow:inset 0 0 30px rgba(0,0,0,.3),var(--mspaint);}
-.arcade{max-width:100%;background:linear-gradient(180deg,#050015,#0a0020);border:4px solid var(--cyan);padding:16px;text-align:center;font-family:'Press Start 2P',monospace;font-size:9px;color:var(--cyan);box-shadow:0 0 25px rgba(0,255,255,.1),inset 0 0 20px rgba(0,255,255,.02);}
+.cork{background:linear-gradient(135deg,#8B6914,#A0782C,#7A5A12);border:6px solid #3a1a0a;padding:16px;min-height:280px;position:relative;box-shadow:inset 0 0 30px rgba(0,0,0,.3),var(--mspaint);}
+.arcade{background:linear-gradient(180deg,#050015,#0a0020);border:4px solid var(--cyan);padding:16px;text-align:center;font-family:'Press Start 2P',monospace;font-size:9px;color:var(--cyan);box-shadow:0 0 25px rgba(0,255,255,.1),inset 0 0 20px rgba(0,255,255,.02);}
 
 /* ── POST-IT FLOATING ── */
 .floating-note{position:fixed;z-index:850;background:#fff9a8;padding:10px 24px 10px 10px;font-family:'Comic Sans MS',cursive;font-size:11px;color:#333;box-shadow:3px 4px 8px rgba(0,0,0,.35);max-width:145px;cursor:move;animation:nPop .3s ease-out;border:1px solid rgba(0,0,0,.08);}
@@ -383,7 +381,9 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
       <!-- iPhone message bubbles -->
       <div class="iphone-msg" id="iphone-msgs" style="min-height:60px;margin-bottom:8px;"></div>
       
-      <!-- iPod player (inside desktop-area) -->
+      </div>
+      
+    <!-- iPod player (inside desktop-area) -->
 <div id="ipod-anchor" style="position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);width:90%;max-width:360px;display:flex;flex-direction:column;align-items:center;">
 <div class="ipod-player">
   <div class="ipod-label">✦ WebFRIENDS iPod ✦</div>
@@ -405,8 +405,7 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
   <button class="game-btn gbb" onclick="spawnPostIt()" id="btn-postit">📝 POST-IT</button>
   <button class="game-btn gbc" onclick="toggleSky()" id="btn-sky">☀️ LIGHT</button>
 </div>
-</div>
-    </div>
+</div></div>
   </div>
 
 <!-- ═══ LEFT SIDEBAR ═══ -->
@@ -419,7 +418,7 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
   </div>
 
   <!-- VIEW: AVATAR STUDIO -->
-  <div id="view-avatar" class="view-panel" >
+  <div id="view-avatar" class="view-panel">
     <div class="av-studio">
       <div class="av-preview">
         <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--pink);margin-bottom:6px;">✦ AVATAR STUDIO ✦</div>
@@ -459,17 +458,17 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
   </div>
 
   <!-- VIEW: HUB (MySpace panels) -->
-  <div id="view-hub" class="view-panel" >
+  <div id="view-hub" class="view-panel">
     <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:var(--pink);text-align:center;margin-bottom:10px;">✦ THE HUB ✦</div>
     <div style="display:flex;gap:4px;margin-bottom:10px;">
       <button class="btn sm active" onclick="hubTab('individual')">INDIVIDUAL</button>
       <button class="btn sm" onclick="hubTab('group')">GRUPAL</button>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px;max-width:100%;" id="hub-grid"></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;" id="hub-grid"></div>
   </div>
 
   <!-- VIEW: FOOD (Gothic/Pink toggle) -->
-  <div id="view-food" class="view-panel" >
+  <div id="view-food" class="view-panel">
     <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:var(--pink);text-align:center;margin-bottom:8px;">✦ FOOD DIARY ✦</div>
     <div style="display:flex;gap:6px;margin-bottom:8px;">
       <input type="text" class="inp" id="food-name" placeholder="Dish name..." style="flex:1;">
@@ -477,11 +476,11 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
       <select class="inp" id="food-style" style="width:auto;"><option value="gothic">Void.exe</option><option value="fanzine">KiraKira</option></select>
       <button class="btn sm lime" onclick="addFood()">+ ADD</button>
     </div>
-    <div id="food-list" style="max-width:100%;overflow-x:hidden;"></div>
+    <div id="food-list"></div>
   </div>
 
   <!-- VIEW: BLOG (MS Paint window) -->
-  <div id="view-blog" class="view-panel" >
+  <div id="view-blog" class="view-panel">
     <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:var(--pink);text-align:center;margin-bottom:8px;">✦ NOTEPAD ✦</div>
     <div class="paint-window">
       <div class="paint-bar">📝 untitled - Notepad<div class="pb-close">✕</div></div>
@@ -498,7 +497,7 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
   </div>
 
   <!-- VIEW: POST-IT BOARD -->
-  <div id="view-postit" class="view-panel" >
+  <div id="view-postit" class="view-panel">
     <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:var(--pink);text-align:center;margin-bottom:8px;">✦ PINBOARD ✦</div>
     <div style="display:flex;gap:6px;margin-bottom:8px;">
       <input type="text" class="inp" id="pin-text" placeholder="Note text..." style="flex:1;">
@@ -508,7 +507,7 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
   </div>
 
   <!-- VIEW: CALENDAR -->
-  <div id="view-calendar" class="view-panel" >
+  <div id="view-calendar" class="view-panel">
     <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:var(--pink);text-align:center;margin-bottom:8px;" id="cal-month">✦ CALENDAR ✦</div>
     <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;"></div>
     <div style="display:flex;gap:6px;margin-top:8px;">
@@ -519,7 +518,7 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
   </div>
 
   <!-- VIEW: ALBUM + ARCADE -->
-  <div id="view-album" class="view-panel" >
+  <div id="view-album" class="view-panel">
     <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:var(--pink);text-align:center;margin-bottom:8px;">✦ PHOTO ALBUM ✦</div>
     <div id="cork-album" class="cork"></div>
     <div style="margin-top:6px;">
@@ -835,10 +834,12 @@ setTimeout(()=>{const v=['gba','gbb','gbc','gbd'];document.querySelectorAll('.ga
 function updateDeskItems(){
   const pp=localStorage.getItem('wf_profile_photo');
   const un=localStorage.getItem('wf_username');
+  // Priority: 1) localStorage username (set by loadUserProfile or Avatar Studio), 2) email prefix
   const myUname = C ? (un || C.user_metadata?.username || C.email?.split('@')[0] || 'you') : 'angel_bby';
   const myTitle = un || 'untitled - Paint';
   const EU=[
-    {name: myUname, img: pp||'https://i.pinimg.com/originals/68/e3/0c/68e30c98e0c864a77c16a278a49bb230.gif', title: myTitle}, {name:'angel_bby',img:'https://i.pinimg.com/originals/c1/b7/90/c1b79059622fb0c0cda30a7895ac4fb8.gif',title:'untitled - Paint'},
+    {name: myUname, img: pp||'https://i.pinimg.com/originals/68/e3/0c/68e30c98e0c864a77c16a278a49bb230.gif', title: myTitle},
+    {name:'angel_bby',img:'https://i.pinimg.com/originals/c1/b7/90/c1b79059622fb0c0cda30a7895ac4fb8.gif',title:'untitled - Paint'},
     {name:'cyber_kittn',img:'https://i.pinimg.com/originals/87/e2/e0/87e2e02f70cd4ed3f14d707fc1eb516b.gif',title:'my_art.bmp'},
     {name:'vampy_gurl',img:'https://i.pinimg.com/originals/46/f1/ac/46f1ac827de4f7a9e5521a864321bb0b.gif',title:'avatar.gif'},
     {name:'pix3l_prince',img:'https://i.pinimg.com/originals/84/9b/0d/849b0d3f428a3e726db7d6ce97d76afb.gif',title:'selfie.jpg'},
@@ -854,25 +855,30 @@ function updateDeskItems(){
   const L={x1:sw+120,x2:icx-iw/2-100,y1:250,y2:iy-60};
   const R={x1:icx+iw/2+30,x2:vw-130,y1:250,y2:iy-60};
   const placed=[];
+  const savedPos=JSON.parse(localStorage.getItem('wf_cardPos')||'{}');
   function ov(x,y,w,h){return placed.some(p=>Math.abs(x-p.x)<(w+p.w)/2+15&&Math.abs(y-p.y)<(h+p.h)/2+15);}
   EU.forEach((u,i)=>{
-    const card=document.createElement('div');card.className='user-card desk-card';card.style.position='fixed';card.style.pointerEvents='all';
+    const card=document.createElement('div');card.className='user-card desk-card';card.style.position='absolute';card.style.pointerEvents='all';
     let x,y;
-    if(i===0){x=sw+3;y=135;}else if(i===1){x=sw+3;y=245;}else if(i===2){x=sw+3;y=355;}
+    if(savedPos[i]){x=savedPos[i].x;y=savedPos[i].y;}
+    else if(i===0){x=sw+3;y=135;}else if(i===1){x=sw+3;y=245;}else if(i===2){x=sw+3;y=355;}
     else{const zone=i%2===0?L:R;let tries=0;do{x=zone.x1+Math.random()*Math.max(0,zone.x2-zone.x1);y=zone.y1+Math.random()*Math.max(0,zone.y2-zone.y1);tries++;}while(ov(x,y,95,105)&&tries<30);}
     placed.push({x,y,w:95,h:105});
     card.style.left=x+'px';card.style.top=y+'px';card.style.zIndex='55';
     card.innerHTML='<div class="uc-status"></div><img src="'+u.img+'" style="width:50px;height:50px;object-fit:cover;border-radius:50%;border:2px solid var(--pink);display:block;margin:0 auto;background:linear-gradient(135deg,var(--pink),var(--cyan));"><div class="uc-name">@'+u.name+'</div><div class="uc-title">'+u.title+'</div>';
-    card.addEventListener('mousedown',userCardDrag);document.body.appendChild(card);
+    card.addEventListener('mousedown',userCardDrag);document.getElementById('desktop-area').appendChild(card);
   });
   corkPhotos.slice(-6).forEach((p,i)=>{
-    const d=document.createElement('div');d.className='desk-polaroid desk-card';d.style.position='fixed';d.style.pointerEvents='all';
+    const d=document.createElement('div');d.className='desk-polaroid desk-card';d.style.position='absolute';d.style.pointerEvents='all';
     const maxX=icx-iw/2-110;const x=Math.min(sw+120+(i*100)%400,maxX);const y=260+(i*60)%(iy-340);
     d.style.left=x+'px';d.style.top=y+'px';d.style.zIndex='50';d.style.setProperty('--r',((i%5)-2)*3+'deg');
     d.innerHTML='<img class="dp-img" src="'+p.src+'"><div class="dp-cap">'+(p.caption||p.date||'recent')+'</div>';
-    d.addEventListener('mousedown',deskPolaroidDrag);d.addEventListener('dblclick',()=>navigateTo('view-album'));document.body.appendChild(d);
+    d.addEventListener('mousedown',deskPolaroidDrag);d.addEventListener('dblclick',()=>navigateTo('view-album'));document.getElementById('desktop-area').appendChild(d);
   });
-}setTimeout(()=>{document.getElementById('ipod-anchor').style.display='flex';updateDeskItems();const un=localStorage.getItem('wf_username');if(un)document.getElementById('av-username').value=un;},800);
+}
+function userCardDrag(e){const card=e.target.closest('.user-card');if(!card)return;card.style.zIndex=75;const ox=e.clientX-card.offsetLeft,oy=e.clientY-card.offsetTop;function mv(ev){card.style.left=(ev.clientX-ox)+'px';card.style.top=(ev.clientY-oy)+'px';}function up(){card.style.zIndex=55;const idx=Array.from(card.parentNode.children).indexOf(card);if(idx>=0){const saved=JSON.parse(localStorage.getItem('wf_cardPos')||'{}');saved[idx]={x:card.style.left,y:card.style.top};localStorage.setItem('wf_cardPos',JSON.stringify(saved));}document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);}document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);}
+function deskPolaroidDrag(e){const el=e.target.closest('.desk-polaroid');if(!el)return;el.style.zIndex=70;el._dragged=false;const ox=e.clientX-el.offsetLeft,oy=e.clientY-el.offsetTop;function mv(ev){el.style.left=(ev.clientX-ox)+'px';el.style.top=(ev.clientY-oy)+'px';el._dragged=true;}function up(){el.style.zIndex=50;document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);}document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);}
+setTimeout(()=>{document.getElementById('ipod-anchor').style.display='flex';updateDeskItems();const un=localStorage.getItem('wf_username');if(un)document.getElementById('av-username').value=un;},800);
 // Restore saved YouTube & Spotify on load
 setTimeout(()=>{
   const yt=localStorage.getItem('wf_yt');
