@@ -385,30 +385,6 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
     </div>
   </div>
 
-  <!-- iPod player FIXED at bottom (body level) -->
-  <div id="ipod-anchor" style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);margin-left:92px;z-index:500;display:flex;flex-direction:column;align-items:center;max-width:min(360px, calc(100vw - 220px));padding:12px 0 8px;background:linear-gradient(180deg,transparent,rgba(10,0,20,.95) 25%);">
-  <div class="ipod-player">
-    <div class="ipod-label">✦ WebFRIENDS iPod ✦</div>
-    <div class="ipod-screen" id="ipod-screen">
-      <div style="color:#0f0;text-align:center;font-family:'Silkscreen',monospace;font-size:10px;">♪<br>PASTE<br>YOUTUBE<br>URL<br>♪</div>
-    </div>
-    <div class="ipod-wheel">
-      <button class="ipod-btn" onclick="playPrev()" style="color:#333;font-weight:bold;">⏮</button>
-      <button class="ipod-btn" id="ipod-play" onclick="playYT()" style="color:#333;font-weight:bold;">▶</button>
-      <button class="ipod-btn" onclick="playNext()" style="color:#333;font-weight:bold;">⏭</button>
-    </div>
-    <div class="ipod-url-bar">
-      <input type="text" id="yt-url" placeholder="youtube.com/watch?v=..." onkeydown="if(event.key==='Enter')playYT()">
-      <button class="ipod-btn" onclick="playYT()" style="font-size:10px;color:#333;font-weight:bold;">GO</button>
-    </div>
-  </div>
-  <div style="text-align:center;margin-top:6px;display:flex;gap:6px;justify-content:center;" id="game-btns">
-    <button class="game-btn gba" onclick="emojiDrop()" id="btn-emoji">💖 EMOJI DROP</button>
-    <button class="game-btn gbb" onclick="spawnPostIt()" id="btn-postit">📝 POST-IT</button>
-    <button class="game-btn gbc" onclick="toggleSky()" id="btn-sky">☀️ LIGHT</button>
-  </div>
-  </div>
-
 <!-- ═══ LEFT SIDEBAR ═══ -->
 
 
@@ -893,5 +869,30 @@ setTimeout(()=>{
   const sp=localStorage.getItem('wf_sp');if(sp){document.getElementById('spotify-url').value=sp;embedSpotify();}
 },1000);
 </script>
+
+<!-- iPod player (body level, fixed to viewport) -->
+<div id="ipod-anchor" style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);margin-left:92px;z-index:500;display:flex;flex-direction:column;align-items:center;max-width:min(360px, calc(100vw - 220px));padding:12px 0 8px;background:linear-gradient(180deg,transparent,rgba(10,0,20,.95) 25%);">
+<div class="ipod-player">
+  <div class="ipod-label">✦ WebFRIENDS iPod ✦</div>
+  <div class="ipod-screen" id="ipod-screen">
+    <div style="color:#0f0;text-align:center;font-family:'Silkscreen',monospace;font-size:10px;">♪<br>PASTE<br>YOUTUBE<br>URL<br>♪</div>
+  </div>
+  <div class="ipod-wheel">
+    <button class="ipod-btn" onclick="playPrev()" style="color:#333;font-weight:bold;">⏮</button>
+    <button class="ipod-btn" id="ipod-play" onclick="playYT()" style="color:#333;font-weight:bold;">▶</button>
+    <button class="ipod-btn" onclick="playNext()" style="color:#333;font-weight:bold;">⏭</button>
+  </div>
+  <div class="ipod-url-bar">
+    <input type="text" id="yt-url" placeholder="youtube.com/watch?v=..." onkeydown="if(event.key==='Enter')playYT()">
+    <button class="ipod-btn" onclick="playYT()" style="font-size:10px;color:#333;font-weight:bold;">GO</button>
+  </div>
+</div>
+<div style="text-align:center;margin-top:6px;display:flex;gap:6px;justify-content:center;" id="game-btns">
+  <button class="game-btn gba" onclick="emojiDrop()" id="btn-emoji">💖 EMOJI DROP</button>
+  <button class="game-btn gbb" onclick="spawnPostIt()" id="btn-postit">📝 POST-IT</button>
+  <button class="game-btn gbc" onclick="toggleSky()" id="btn-sky">☀️ LIGHT</button>
+</div>
+</div>
+
 </body>
 </html>
