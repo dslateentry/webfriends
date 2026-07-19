@@ -697,31 +697,22 @@ let authMode='login';
 function toggleAuthMode(){authMode=authMode==='login'?'register':'login';document.getElementById('auth-user').classList.toggle('hidden',authMode==='login');document.getElementById('auth-btn').textContent=authMode==='login'?'LOGIN':'REGISTER';document.getElementById('auth-toggle').textContent=authMode==='login'?'New? Register here':'Have account? Login';document.getElementById('auth-error').textContent='';}
 async function doAuth(){
   const e=document.getElementById('auth-email').value.trim(),p=document.getElementById('auth-pass').value,u=document.getElementById('auth-user').value.trim();
-  if(!e||!p||p.length<6){document.getElementById('auth-error').textContent='Email/username + password (6+ chars) required';return;}
-  let email=e;
-  // If input doesn't look like email, try to find email by username
-  if(!e.includes('@')){
-    const{data}=await sb.from('profiles').select('id').eq('username',e).single();
-    if(!data){document.getElementById('auth-error').textContent='Username not found';return;}
-    email=e; // Use the username to look up - actually we need the email
-  }
+  document.getElementById('auth-error').textContent='';
+  if(!e||p.length<6){document.getElementById('auth-error').textContent='Email + password (6+ chars) required';return;}
   if(authMode==='login'){
-    let{data,error}=await sb.auth.signInWithPassword({email:email,password:p});
-    // If email login failed and user typed username, try fetching profiles
-    if(error&&!e.includes('@')){document.getElementById('auth-error').textContent='Use your email to login, not username';return;}
+    const{data,error}=await sb.auth.signInWithPassword({email:e,password:p});
     if(error){document.getElementById('auth-error').textContent=error.message;return;}
-    C=data.user;document.getElementById('auth-overlay').style.display='none';updateDeskItems();toast('Welcome back! 💕');
+    C=data.user;document.getElementById('auth-overlay').style.display='none';updateDeskItems();toast('Welcome back!');
   }else{
-    if(!u){document.getElementById('auth-error').textContent='Username required';return;}
+    if(!u){document.getElementById('auth-error').textContent='Pick a username';return;}
     const{data,error}=await sb.auth.signUp({email:e,password:p,options:{data:{username:u}}});
     if(error){document.getElementById('auth-error').textContent=error.message;return;}
-    if(data.user){C=data.user;document.getElementById('auth-overlay').style.display='none';updateDeskItems();toast('Welcome, @'+u+'! 💕');}
+    if(data.user){C=data.user;document.getElementById('auth-overlay').style.display='none';updateDeskItems();toast('Welcome, @'+u+'!');}
+    else{document.getElementById('auth-error').textContent='Check your email. Or disable email confirmation in Supabase > Settings.';}
   }
 }
-async function checkSession(){
-  const{data:{session}}=await sb.auth.getSession();
-  if(session){C=session.user;document.getElementById('auth-overlay').style.display='none';}else{document.getElementById('auth-overlay').style.display='flex';}
-}
+async function checkSession(){const{data:{session}}=await sb.auth.getSession();if(session){C=session.user;document.getElementById('auth-overlay').style.display='none';updateDeskItems();}else{document.getElementById('auth-overlay').style.display='flex';}}
+setTimeout(checkSession,500);
 setTimeout(checkSession,300);
 function toast(m,d=2500){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',d);}
 function initStars(){const c=document.getElementById('star-cnv'),ctx=c.getContext('2d');c.width=window.innerWidth;c.height=window.innerHeight;const s=[];for(let i=0;i<80;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:.5+Math.random()*2,c:['#ff1493','#0ff','#cf0','#fff','#da70d6'][i%5],sp:.005+.01*Math.random(),a:Math.random()*Math.PI*2});function draw(){ctx.clearRect(0,0,c.width,c.height);s.forEach(p=>{p.a+=p.sp;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.c;ctx.globalAlpha=.3+.7*Math.abs(Math.sin(p.a));ctx.fill();});ctx.globalAlpha=1;requestAnimationFrame(draw);}draw();}
