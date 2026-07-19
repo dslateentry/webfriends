@@ -380,8 +380,8 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
       <!-- iPhone message bubbles (above iPod) -->
       <div class="iphone-msg" id="iphone-msgs" style="min-height:60px;margin-bottom:8px;"></div>
       
-      <!-- iPod player PINNED to viewport bottom, centered in content area -->
-      <div id="ipod-anchor" style="position:fixed;bottom:6px;left:calc((100vw + 185px)/2);transform:translateX(-50%);z-index:500;">
+      <!-- iPod player centered in content area -->
+      <div id="ipod-anchor" style="position:relative;margin:0 auto;width:fit-content;z-index:500;display:flex;flex-direction:column;align-items:center;">
       <div class="ipod-player">
         <div class="ipod-label">✦ WebFRIENDS iPod ✦</div>
         <div class="ipod-screen" id="ipod-screen">
@@ -389,7 +389,7 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
         </div>
         <div class="ipod-wheel">
           <button class="ipod-btn" onclick="playPrev()" style="color:#333;font-weight:bold;">⏮</button>
-          <button class="ipod-btn" id="ipod-play" onclick="playYT()" style="color:#333;font-weight:bold;">Play</button>
+          <button class="ipod-btn" id="ipod-play" onclick="playYT()" style="color:#333;font-weight:bold;">▶</button>
           <button class="ipod-btn" onclick="playNext()" style="color:#333;font-weight:bold;">⏭</button>
         </div>
         <div class="ipod-url-bar">
@@ -425,7 +425,9 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
           <button class="btn sm" onclick="saveAvatar2()">💾 Save</button>
         </div>
         <!-- Profile photo section -->
-        <div style="margin-top:10px;padding:6px;background:rgba(255,255,255,.03);border-radius:6px;border:1px dashed rgba(255,20,147,.2);">
+        <div style="margin-top:10px;padding:6px;background:rgba(255,255,255,.03);border-radius:6px;border:1px dashed rgba(255,20,147,.2);margin-bottom:8px;">
+          <div style="font-family:Silkscreen;font-size:7px;color:var(--pink2);margin-bottom:4px;">✦ DISPLAY NAME ✦</div>
+          <input type="text" class="inp" id="av-username" placeholder="Enter name..." onchange="updateUsername()" style="font-size:10px;text-align:center;width:100%;margin-bottom:8px;">
           <div style="font-family:Silkscreen;font-size:7px;color:var(--pink2);margin-bottom:4px;">✦ PROFILE PHOTO ✦</div>
           <input type="file" id="profile-photo-upload" accept="image/*" onchange="uploadProfilePhoto(event)" class="hidden">
           <button class="btn sm" onclick="document.getElementById('profile-photo-upload').click()">📷 Upload</button>
@@ -802,7 +804,7 @@ function emojiDrop(){for(let i=0;i<6;i++){setTimeout(()=>{const e=document.creat
 function spawnPostIt(){const cl=['#fff9a8','#ffb6c1','#e0ffff','#ccff00'];const el=document.createElement('div');el.className='floating-note';el.style.background=cl[Math.floor(Math.random()*cl.length)];el.style.left=(5+Math.random()*70)+'%';el.style.top=(5+Math.random()*65)+'%';const txt=prompt('Post-it text:');if(!txt)return;el.innerHTML='<button class="nx" onclick="this.parentElement.remove()">x</button>'+txt;el.addEventListener('mousedown',noteDrag);document.getElementById('app-main').appendChild(el);}
 function noteDrag(e){const el=e.target.closest('.floating-note');if(!el)return;const ox=e.clientX-el.offsetLeft,oy=e.clientY-el.offsetTop;function mv(ev){el.style.left=(ev.clientX-ox)+'px';el.style.top=(ev.clientY-oy)+'px';}function up(){document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);}document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);}
 function toggleSidebar(){document.body.classList.toggle('sb-hidden');const t=document.querySelector('.sb-toggle');if(t)t.textContent=document.body.classList.contains('sb-hidden')?'▶':'◀';const hidden=document.body.classList.contains('sb-hidden');const anchor=document.getElementById('ipod-anchor');if(anchor)anchor.style.left=hidden?'50%':'calc((100vw + 185px)/2)';updateDeskItems();}
-function playYT(){const u=document.getElementById('yt-url').value.trim();const btn=document.getElementById('ipod-play');if(btn&&btn.textContent==='Pause'){document.getElementById('ipod-screen').innerHTML='<div style="color:#0f0;text-align:center;font-family:Silkscreen;font-size:10px;">PASTE YOUTUBE URL</div>';btn.textContent='Play';document.getElementById('sb-music').textContent='No track';return;}const m=u.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);if(!m){toast('Invalid URL');return;}localStorage.setItem('wf_yt',u);document.getElementById('ipod-screen').innerHTML='<iframe src="https://www.youtube.com/embed/'+m[1]+'" allowfullscreen style="width:100%;height:100%;border:none;background:#000;"></iframe>';document.getElementById('sb-music').textContent='YT PLAYING';document.querySelector('.bb-cd')?.classList.remove('paused');const bb=document.getElementById('bb-play');if(bb)bb.textContent='Pause';if(btn)btn.textContent='Pause';toast('Playing!');}function playPrev(){toast('prev');}
+function playYT(){const u=document.getElementById('yt-url').value.trim();const btn=document.getElementById('ipod-play');if(btn&&btn.textContent==='⏸'){document.getElementById('ipod-screen').innerHTML='<div style="color:#0f0;text-align:center;font-family:Silkscreen;font-size:10px;">PASTE YOUTUBE URL</div>';btn.textContent='▶';document.getElementById('sb-music').textContent='No track';return;}const m=u.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);if(!m){toast('Invalid URL');return;}localStorage.setItem('wf_yt',u);document.getElementById('ipod-screen').innerHTML='<iframe src="https://www.youtube.com/embed/'+m[1]+'?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen style="width:100%;height:100%;border:none;background:#000;"></iframe>';document.getElementById('sb-music').textContent='YT PLAYING';document.querySelector('.bb-cd')?.classList.remove('paused');const bb=document.getElementById('bb-play');if(bb)bb.textContent='⏸';if(btn)btn.textContent='⏸';toast('Playing!');}function playPrev(){toast('prev');}
 function playPrev(){toast('prev');}
 function playNext(){toast('next');}
 const MSGS=[['hey bestie!!','omg did u see the new layout??','yessss its so y2k i love it'],['wyd rn?','customizing my avatar for the 50th time...','mood tbh'],['my tamagotchi has a better sleep schedule than me','LMAOOO same','we should feed it'],['remember that embarrassing thing from 2007?','PLS DONT REMIND ME','too late']];
@@ -813,7 +815,15 @@ function initFilmstrip(){const track=document.getElementById('filmstrip-track');
 setTimeout(initFilmstrip,200);
 setTimeout(()=>{const v=['gba','gbb','gbc','gbd'];document.querySelectorAll('.game-btn').forEach(b=>{b.classList.remove('gba','gbb','gbc','gbd');b.classList.add(v[Math.floor(Math.random()*v.length)]);});const sb=document.getElementById('btn-sky');if(sb)sb.textContent=document.body.classList.contains('sky')?'🌙 DARK':'☀️ LIGHT';},100);
 function updateDeskItems(){
-  const pp=localStorage.getItem('wf_profile_photo');const EU=[{name:C?(localStorage.getItem('wf_username')||(localStorage.getItem('wf_username')||C?.email?.split('@')[0]||'you')||'you'):'angel_bby',img:pp||'https://i.pinimg.com/originals/68/e3/0c/68e30c98e0c864a77c16a278a49bb230.gif',title:'untitled - Paint'},{name:C?(localStorage.getItem('wf_username')||(localStorage.getItem('wf_username')||C?.email?.split('@')[0]||'you')||'you'):'angel_bby',img:C?'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><rect fill=%22%23ff1493%22 width=%2250%22 height=%2250%22/><text fill=%22white%22 x=%2225%22 y=%2232%22 text-anchor=%22middle%22 font-size=%2220%22>'+C.email[0].toUpperCase()+'</text></svg>':'https://i.pinimg.com/originals/68/e3/0c/68e30c98e0c864a77c16a278a49bb230.gif',title:'untitled - Paint'},{name:'angel_bby',img:'https://i.pinimg.com/originals/68/e3/0c/68e30c98e0c864a77c16a278a49bb230.gif',title:'untitled - Paint'},{name:'cyber_kittn',img:'https://i.pinimg.com/originals/87/e2/e0/87e2e02f70cd4ed3f14d707fc1eb516b.gif',title:'my_art.bmp'},{name:'vampy_gurl',img:'https://i.pinimg.com/originals/46/f1/ac/46f1ac827de4f7a9e5521a864321bb0b.gif',title:'avatar.gif'},{name:'pix3l_prince',img:'https://i.pinimg.com/originals/84/9b/0d/849b0d3f428a3e726db7d6ce97d76afb.gif',title:'selfie.jpg'},{name:'st4r_boy',img:'https://i.pinimg.com/originals/03/b7/7b/03b77be9013ae731c17809cfb743e36e.gif',title:'mypic.png'},{name:'gl1tter_g0th',img:'https://i.pinimg.com/originals/54/65/7f/54657fdf199b1c3f7a2e8f355e20496b.gif',title:'photo.bmp'}];
+  const pp=localStorage.getItem('wf_profile_photo');
+  const un=localStorage.getItem('wf_username');
+  const myUname = C ? (C.user_metadata?.username || C.email?.split('@')[0] || 'you') : 'angel_bby';
+  const myTitle = un || 'untitled - Paint';
+  const EU=[
+    {name: myUname, img: pp||'https://i.pinimg.com/originals/68/e3/0c/68e30c98e0c864a77c16a278a49bb230.gif', title: myTitle},
+    {name: myUname, img: C?`data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><rect fill=%22%23ff1493%22 width=%2250%22 height=%2250%22/><text fill=%22white%22 x=%2225%22 y=%2232%22 text-anchor=%22middle%22 font-size=%2220%22>${C.email[0].toUpperCase()}</text></svg>`:'https://i.pinimg.com/originals/68/e3/0c/68e30c98e0c864a77c16a278a49bb230.gif', title: myTitle},
+    {name:'angel_bby',img:'https://i.pinimg.com/originals/68/e3/0c/68e30c98e0c864a77c16a278a49bb230.gif',title:'untitled - Paint'},{name:'cyber_kittn',img:'https://i.pinimg.com/originals/87/e2/e0/87e2e02f70cd4ed3f14d707fc1eb516b.gif',title:'my_art.bmp'},{name:'vampy_gurl',img:'https://i.pinimg.com/originals/46/f1/ac/46f1ac827de4f7a9e5521a864321bb0b.gif',title:'avatar.gif'},{name:'pix3l_prince',img:'https://i.pinimg.com/originals/84/9b/0d/849b0d3f428a3e726db7d6ce97d76afb.gif',title:'selfie.jpg'},{name:'st4r_boy',img:'https://i.pinimg.com/originals/03/b7/7b/03b77be9013ae731c17809cfb743e36e.gif',title:'mypic.png'},{name:'gl1tter_g0th',img:'https://i.pinimg.com/originals/54/65/7f/54657fdf199b1c3f7a2e8f355e20496b.gif',title:'photo.bmp'}
+  ];
   const home=document.getElementById('view-home');
   if(!home||!home.classList.contains('active')){document.querySelectorAll('.desk-card').forEach(c=>c.remove());return;}
   document.querySelectorAll('.desk-card').forEach(c=>c.remove());
