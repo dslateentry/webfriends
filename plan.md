@@ -7,53 +7,60 @@ HTML5 + CSS vanilla + Vanilla JS + Supabase + PeerJS
 
 ---
 
-## Funcionalidades Implementadas (Fases completadas)
+## Funcionalidades Implementadas
 
 ### Core (✅)
-- Auth Supabase (login/registro). Login usando Email, renderizando perfiles por Username.
-- Perfiles de usuario dinámicos (User Cards en el home leyendo metadata de Supabase y localStorage).
-- Botón Logout implementado.
-- Feed de fotos polaroid.
-- UI Responsiva básica (iPod y Sidebar).
+- Auth Supabase (login/registro con email)
+- Perfiles de usuario dinámicos (user cards mapean username)
+- Logout en sidebar
 
 ### Social (✅)
-- Spotify Embeds (sandbox iframe).
-- Guestbook y MSN Chat global.
-- Hub de Recomendaciones (Foryou 💅✨).
+- Spotify Embeds (iframe + fallback link)
+- MSN Chat global con guest links efímeros
+- Hub de Recomendaciones (Foryou 💅✨, Individual/Grupal × 6)
 
 ### Creative (✅)
-- Avatar Paper Doll con imágenes Bratz reales (pixeldolls.net) y selector de Display Name.
-- Dress to Impress UI con género F/M/X y Sims 2 bubbles.
-- Notepad blog (MS Paint windows, 4 fuentes).
-- Corcho virtual (Notitas 💕) y Fotolog con capacidad de persistencia y eliminación (botón rojo X).
-- Calendario colaborativo con eventos.
+- Avatar Paper Doll con imágenes Bratz reales (pixeldolls.net)
+- Dress to Impress UI con género F/M/X + Sims 2 bubbles
+- Profile photo (upload o selección de GIFs)
+- Display Name input en Avatar Studio
+- Notepad blog (MS Paint windows, 4 fuentes)
+- Corcho virtual (Notitas 💕)
+- Fotolog con persistencia localStorage + delete (X rojo) + captions
+- Calendario colaborativo con eventos
 
-### Comunicaciones (✅)
-- WebRTC P2P (PeerJS CDN).
-- Screen sharing (getDisplayMedia).
-- Stream chat separado.
-- Ephemeral guest links (UUID, TTL 5 min).
-
-### Entretenimiento (✅)
-- Tamagotchi Grupal (3 stats, decay 40s, evolución 3 stages).
-- Winamp/Spotify player con visualizer.
-- Flip phone RAZR (notificaciones chat).
-- Emoji Drop (30 emojis) y Post-its caóticos arrastrables.
-- YouTube embed (iPod/MP4 player en Home) adaptado a ventanas pequeñas, con Autoplay y botones ▶/⏸.
+### Media (✅)
+- iPod/MP4 player con YouTube embed
+- Autoplay inteligente: muteado al recargar, con sonido al click manual
+- Boombox/CD player retro con Spotify
+- Botones Play/Pause (▶/⏸) sincronizados
 
 ### UI (✅)
-- SPA routing con sidebar izquierdo (collapsible). Textos ampliados.
-- Pop-ups Win95 arrastrables (Z-index dinámico).
-- 3 temas: Night / Sky (toggle).
-- Botones retro game con variantes aleatorias.
-- Fullscreen Support (botón ⛶ FS).
+- Sidebar collapsible con 8 vistas SPA
+- 4 pop-ups Win95 arrastrables
+- Widgets flotantes derecha
+- Fullscreen button
+- 3 temas: Night / Sky (toggle)
+- User cards draggables en el escritorio
+- Polaroids de álbum en el escritorio
+- Burbujas iPhone secuenciales
+- Filmstrip GIFs infinito
+
+### Comunicaciones (✅)
+- WebRTC P2P (PeerJS CDN)
+- Screen sharing
+- Stream chat separado
+- Ephemeral guest links (UUID, TTL 5 min, sendBeacon)
+
+### Entretenimiento (✅)
+- Tamagotchi Grupal (3 stats, decay 40s, evolución 🥚→🐣→🐤→🐔)
+- Emoji Drop (30 emojis, 6 por burst)
+- Post-its caóticos arrastrables
 
 ---
 
-## Futuras Mejoras (TO-DO)
-
-- [ ] Integración total de persistencia de Avatares, Fotolog y Tamagotchi a Supabase.
-- [ ] Supabase Realtime para chat sincronizado global en tiempo real.
-- [ ] Leaderboards del grupo y ranking.
-- [ ] Temas personalizados almacenados por usuario en la Base de Datos.
-- [ ] Soporte para uploads directos a Supabase Storage para imágenes.
+## TO-DO
+- [ ] Fotos compartidas entre usuarios (Supabase Storage)
+- [ ] Realtime chat (Supabase Realtime)
+- [ ] Minijuegos en Arcade
+- [ ] Leaderboards
