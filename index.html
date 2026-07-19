@@ -881,6 +881,7 @@ setTimeout(()=>{
   const yt=localStorage.getItem('wf_yt');
   if(yt){
     document.getElementById('yt-url').value=yt;
+    const btn=document.getElementById('ipod-play');if(btn)btn.textContent='▶';
     playYT();
   }
   const sp=localStorage.getItem('wf_sp');if(sp){document.getElementById('spotify-url').value=sp;embedSpotify();}
