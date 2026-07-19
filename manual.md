@@ -1,57 +1,30 @@
-# Manual de Referencia - WebFRIENDS
+# WebFRIENDS — Manual Técnico
 
-## Estructura del index.html (889 líneas)
+## Estructura (index.html, 889 líneas)
+- `<style>` — CSS (~350 líneas): variables, sidebar, vistas, popups, reproductores, widgets
+- `<body>` — HTML: auth overlay, canvas, 8 vistas, sidebar, 4 popups, widgets flotantes, iPod
+- `<script>` — JS (~500 líneas): auth, routing, reproductores, desktop, persistencia
 
-```
-<head>     — CDNs + Google Fonts + CSP
-<style>    — CSS completo (~350 líneas)
-<body>     — Auth overlay + canvas + vistas + sidebar + popups + widgets
-<script>   — JS vanilla (~500 líneas)
-```
+## Funciones clave
+| Función | Qué hace |
+|---------|----------|
+| `playYT(muted)` | Crea iframe YouTube. `muted=true` → `&mute=1` (restore). Sin parámetro → con sonido (click) |
+| `waPlay()` | Toggle ▶/⏸ en boombox, pausa/reanuda CD |
+| `embedSpotify()` | Iframe Spotify + fallback link |
+| `updateDeskItems()` | Renderiza user cards + polaroids en escritorio |
+| `navigateTo(vid)` | SPA routing entre vistas |
+| `doAuth()` | Login/register con Supabase |
+| `loadUserProfile(user)` | Carga username desde BD o metadata |
+| `saveCork()` | Persiste fotos en localStorage |
+| `updateUsername()` | Guarda username en localStorage y actualiza UI |
 
-## CSS: Sistema de Capas
-
-### Z-Index
-- `-2 a 5`: Backgrounds, partículas, estrellas, tape strips
-- `15-25`: User cards, polaroids en escritorio
-- `50-55`: Elementos del desktop
-- `100-400`: Popups Win95, widgets flotantes
+## Z-Index
+- `-2 a 5`: fondos, estrellas, tape
+- `15-25`: user cards, polaroids
 - `500`: iPod + botones
-- `720+`: Popups arrastrables
-- `9999`: Auth overlay
+- `720+`: popups arrastrables
+- `9999`: auth overlay
 
-### Sidebar (#sidebar)
-- 185px fijo izquierda, collapsible (`.sb-hidden`)
-- Transiciones: `transform .3s`, `margin-left .3s`
-
-### iPod Player
-- Posición absoluta al fondo del desktop-area
-- Responsive: `max-width:min(360px, calc(100vw - 220px))`
-- Autoplay inteligente: `playYT(muted)` con `?autoplay=1&mute=1` en restore
-
-## JS: Funciones Clave
-
-### Auth
-- `doAuth()` — login/register con Supabase
-- `loadUserProfile(user)` — carga username desde Supabase o metadata
-- `checkSession()` — verifica sesión al cargar
-
-### Reproductores
-- `playYT(muted)` — crea iframe YouTube con/sin mute
-- `waPlay()` — toggle play/pause boombox (▶/⏸)
-- `embedSpotify()` — iframe Spotify
-
-### Desktop
-- `updateDeskItems()` — renderiza user cards + polaroids en escritorio
-- `navigateTo(vid)` — SPA routing entre vistas
-- `toggleSidebar()` — colapsa/expande sidebar
-
-### Persistencia
-- `saveCork()` — guarda fotos en localStorage
-- `saveTama2()` — guarda tamagotchi
-- `updateUsername()` — guarda username
-
-### Restore
-- Al cargar: restaura YouTube URL + llama `playYT(true)` (muted)
-- Al cargar: restaura Spotify URL + llama `embedSpotify()`
-- Al cargar: restaura username en input de Avatar Studio
+## URLs
+- Web: https://dslateentry.github.io/webfriends/
+- Supabase: https://gtizbvbufskdkemtuems.supabase.co
