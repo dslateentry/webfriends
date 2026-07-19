@@ -3,6 +3,8 @@
 ## Completado (✅)
 - Auth Supabase (login/register), perfiles, logout
 - 8 vistas SPA con sidebar collapsible
+- Layout: `position:absolute;left:185px` + `padding-left:190px` en vistas no-Home
+- iPod centrado en `#app-main` (fuera de desktop-area, `left:50%+translateX(-50%)`)
 - 4 pop-ups Win95 (Tama, Boombox, Chat, TV)
 - Avatar Paper Doll Bratz (F/M/X) + Sims 2 bubbles + profile photo
 - iPod YouTube (autoplay muteado en restore, con sonido al click)

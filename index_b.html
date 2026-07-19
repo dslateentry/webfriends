@@ -202,10 +202,6 @@ body.sky .start-item:hover{background:rgba(255,105,180,.15);}
 /* ── VIEW PANELS ── */
 .view-panel{display:none;min-height:100%;}
 .view-panel.active{display:block;}
-#view-avatar,#view-hub,#view-food,#view-blog,#view-postit,#view-calendar,#view-album{padding-left:190px;}
-#view-home{padding-left:0!important;}
-body.sb-hidden .view-panel{padding-left:0!important;}
-
 
 /* ── MS PAINT WINDOW ── */
 .paint-window{background:#fff;border:3px solid;border-color:#fff var(--pink) var(--pink) #fff;border-radius:0;box-shadow:var(--mspaint);margin-bottom:10px;overflow:hidden;}
@@ -387,7 +383,7 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
       
       </div>
       
-    <!-- iPod player (outside desktop-area, inside app-main) -->
+    <!-- iPod player (inside desktop-area) -->
 <div id="ipod-anchor" style="position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);width:90%;max-width:360px;display:flex;flex-direction:column;align-items:center;">
 <div class="ipod-player">
   <div class="ipod-label">✦ WebFRIENDS iPod ✦</div>
@@ -410,6 +406,15 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
   <button class="game-btn gbc" onclick="toggleSky()" id="btn-sky">☀️ LIGHT</button>
 </div>
 </div></div>
+  </div>
+
+<!-- ═══ LEFT SIDEBAR ═══ -->
+
+
+
+<!-- ═══ LEFT SIDEBAR ═══ -->
+      
+    </div>
   </div>
 
   <!-- VIEW: AVATAR STUDIO -->
@@ -816,8 +821,10 @@ const EMOJIS=['💖','🌟','🦋','🌸','✨','💎','🎀','⭐','🦩','🪻
 function emojiDrop(){for(let i=0;i<6;i++){setTimeout(()=>{const e=document.createElement('div');e.className='emoji-burst';e.textContent=EMOJIS[Math.floor(Math.random()*EMOJIS.length)];e.style.left=(3+Math.random()*85)+'%';e.style.top=(5+Math.random()*70)+'%';document.getElementById('app-main').appendChild(e);setTimeout(()=>e.remove(),2600);},i*180);}toast('Emoji drop!');}
 function spawnPostIt(){const cl=['#fff9a8','#ffb6c1','#e0ffff','#ccff00'];const el=document.createElement('div');el.className='floating-note';el.style.background=cl[Math.floor(Math.random()*cl.length)];el.style.left=(5+Math.random()*70)+'%';el.style.top=(5+Math.random()*65)+'%';const txt=prompt('Post-it text:');if(!txt)return;el.innerHTML='<button class="nx" onclick="this.parentElement.remove()">x</button>'+txt;el.addEventListener('mousedown',noteDrag);document.getElementById('app-main').appendChild(el);}
 function noteDrag(e){const el=e.target.closest('.floating-note');if(!el)return;const ox=e.clientX-el.offsetLeft,oy=e.clientY-el.offsetTop;function mv(ev){el.style.left=(ev.clientX-ox)+'px';el.style.top=(ev.clientY-oy)+'px';}function up(){document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);}document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);}
-function toggleSidebar(){document.body.classList.toggle('sb-hidden');const hidden=document.body.classList.contains('sb-hidden');const t=document.querySelector('.sb-toggle');if(t)t.textContent=hidden?'▶':'◀';updateDeskItems();}
-function playYT(muted){const u=document.getElementById('yt-url').value.trim();const btn=document.getElementById('ipod-play');if(btn&&btn.textContent==='⏸'){document.getElementById('ipod-screen').innerHTML='<div style="color:#0f0;text-align:center;font-family:Silkscreen;font-size:10px;">PASTE YOUTUBE URL</div>';btn.textContent='▶';document.getElementById('sb-music').textContent='No track';return;}const m=u.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);if(!m){toast('Invalid URL');return;}localStorage.setItem('wf_yt',u);document.getElementById('ipod-screen').innerHTML='<iframe src="https://www.youtube.com/embed/'+m[1]+'?autoplay=1'+(muted?'&mute=1':'')+'" allow="autoplay; encrypted-media" allowfullscreen style="width:100%;height:100%;border:none;background:#000;"></iframe>';document.getElementById('sb-music').textContent='YT PLAYING';document.querySelector('.bb-cd')?.classList.remove('paused');const bb=document.getElementById('bb-play');if(bb)bb.textContent='⏸';if(btn)btn.textContent='⏸';toast('Playing!');}function playPrev(){toast('prev');}
+function toggleSidebar(){document.body.classList.toggle('sb-hidden');const hidden=document.body.classList.contains('sb-hidden');const ipod=document.getElementById('ipod-anchor');if(ipod)ipod.style.marginLeft=hidden?'0':'92px';const t=document.querySelector('.sb-toggle');if(t)t.textContent=hidden?'▶':'◀';updateDeskItems();}
+function playYT(muted){const u=document.getElementById('yt-url').value.trim();const btn=document.getElementById('ipod-play');if(btn&&btn.textContent==='⏸'){document.getElementById('ipod-screen').innerHTML='<div style="color:#0f0;text-align:center;font-family:Silkscreen;font-size:10px;">PASTE YOUTUBE URL</div>';btn.textContent='▶';document.getElementById('sb-music').textContent='No track';return;}const m=u.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);if(!m){toast('Invalid URL');return;}localStorage.setItem('wf_yt',u);document.getElementById('ipod-screen').innerHTML='<iframe src="https://www.youtube.com/embed/'+m[1]+'?autoplay=1'
+   +'" allow="autoplay; encrypted-media" allowfullscreen style="width:100%;height:100%;border:none;background:#000;"></iframe>';document.getElementById('sb-music').textContent='YT PLAYING';document.querySelector('.bb-cd')?.classList.remove('paused');const bb=document.getElementById('bb-play');if(bb)bb.textContent='⏸';if(btn)btn.textContent='⏸';toast('Playing!');}function playPrev(){toast('prev');}
+function playPrev(){toast('prev');}
 function playNext(){toast('next');}
 const MSGS=[['hey bestie!!','omg did u see the new layout??','yessss its so y2k i love it'],['wyd rn?','customizing my avatar for the 50th time...','mood tbh'],['my tamagotchi has a better sleep schedule than me','LMAOOO same','we should feed it'],['remember that embarrassing thing from 2007?','PLS DONT REMIND ME','too late']];
 function rotateBubbles(){const msgs=MSGS[Math.floor(Math.random()*MSGS.length)];const el=document.getElementById('iphone-msgs');if(!el)return;el.innerHTML='';msgs.forEach((m,i)=>{setTimeout(()=>{const d=document.createElement('div');d.className='imsg'+(i%2===0?' reply':'');d.textContent=m;el.appendChild(d);},i*800);});}
@@ -850,13 +857,11 @@ function updateDeskItems(){
   const L={x1:sw+120,x2:icx-iw/2-100,y1:250,y2:iy-60};
   const R={x1:icx+iw/2+30,x2:vw-130,y1:250,y2:iy-60};
   const placed=[];
-  const savedPos=JSON.parse(localStorage.getItem('wf_cardPos')||'{}');
   function ov(x,y,w,h){return placed.some(p=>Math.abs(x-p.x)<(w+p.w)/2+15&&Math.abs(y-p.y)<(h+p.h)/2+15);}
   EU.forEach((u,i)=>{
     const card=document.createElement('div');card.className='user-card desk-card';card.style.position='absolute';card.style.pointerEvents='all';
     let x,y;
-    if(savedPos[i]){x=savedPos[i].x;y=savedPos[i].y;}
-    else if(i===0){x=sw+3;y=135;}else if(i===1){x=sw+3;y=245;}else if(i===2){x=sw+3;y=355;}
+    if(i===0){x=sw+3;y=135;}else if(i===1){x=sw+3;y=245;}else if(i===2){x=sw+3;y=355;}
     else{const zone=i%2===0?L:R;let tries=0;do{x=zone.x1+Math.random()*Math.max(0,zone.x2-zone.x1);y=zone.y1+Math.random()*Math.max(0,zone.y2-zone.y1);tries++;}while(ov(x,y,95,105)&&tries<30);}
     placed.push({x,y,w:95,h:105});
     card.style.left=x+'px';card.style.top=y+'px';card.style.zIndex='55';
@@ -871,7 +876,7 @@ function updateDeskItems(){
     d.addEventListener('mousedown',deskPolaroidDrag);d.addEventListener('dblclick',()=>navigateTo('view-album'));document.getElementById('desktop-area').appendChild(d);
   });
 }
-function userCardDrag(e){const card=e.target.closest('.user-card');if(!card)return;card.style.zIndex=75;const ox=e.clientX-card.offsetLeft,oy=e.clientY-card.offsetTop;function mv(ev){card.style.left=(ev.clientX-ox)+'px';card.style.top=(ev.clientY-oy)+'px';}function up(){card.style.zIndex=55;const idx=Array.from(card.parentNode.children).indexOf(card);if(idx>=0){const saved=JSON.parse(localStorage.getItem('wf_cardPos')||'{}');saved[idx]={x:card.style.left,y:card.style.top};localStorage.setItem('wf_cardPos',JSON.stringify(saved));}document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);}document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);}
+function userCardDrag(e){const card=e.target.closest('.user-card');if(!card)return;card.style.zIndex=75;const ox=e.clientX-card.offsetLeft,oy=e.clientY-card.offsetTop;function mv(ev){card.style.left=(ev.clientX-ox)+'px';card.style.top=(ev.clientY-oy)+'px';}function up(){card.style.zIndex=55;document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);}document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);}
 function deskPolaroidDrag(e){const el=e.target.closest('.desk-polaroid');if(!el)return;el.style.zIndex=70;el._dragged=false;const ox=e.clientX-el.offsetLeft,oy=e.clientY-el.offsetTop;function mv(ev){el.style.left=(ev.clientX-ox)+'px';el.style.top=(ev.clientY-oy)+'px';el._dragged=true;}function up(){el.style.zIndex=50;document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);}document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);}
 setTimeout(()=>{document.getElementById('ipod-anchor').style.display='flex';updateDeskItems();const un=localStorage.getItem('wf_username');if(un)document.getElementById('av-username').value=un;},800);
 // Restore saved YouTube & Spotify on load

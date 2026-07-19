@@ -9,6 +9,12 @@
 - Paleta: pink/cyan/lime/purple sobre fondo dark animado
 - Fuentes: Silkscreen, Press Start 2P, Comic Sans MS, VT323
 
+## Layout
+- `#app-main{position:absolute;left:185px;top:0;right:0;bottom:0}`
+- `body.sb-hidden #app-main{left:0}`
+- Non-Home views: `padding-left:190px`
+- iPod: fuera de `#desktop-area`, centrado con `left:50%+translateX(-50%)` relativo a `#app-main`
+
 ## Auth
 - Supabase Auth (email + password)
 - `loadUserProfile()` carga username desde BD o metadata

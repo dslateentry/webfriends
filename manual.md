@@ -1,9 +1,17 @@
 # WebFRIENDS — Manual Técnico
 
-## Estructura (index.html, 889 líneas)
-- `<style>` — CSS (~350 líneas): variables, sidebar, vistas, popups, reproductores, widgets
+## Estructura (index.html, 884 líneas)
+- `<style>` — CSS (~350 líneas): variables, sidebar, vistas, popups, reproductores, widgets, layout
 - `<body>` — HTML: auth overlay, canvas, 8 vistas, sidebar, 4 popups, widgets flotantes, iPod
 - `<script>` — JS (~500 líneas): auth, routing, reproductores, desktop, persistencia
+
+## Layout
+- `#app-main{position:absolute;left:185px;top:0;right:0;bottom:0}` — llena espacio derecho del sidebar
+- `body.sb-hidden #app-main{left:0}` — sidebar oculto expande app-main
+- `#view-avatar,#view-hub,#view-food,#view-blog,#view-postit,#view-calendar,#view-album{padding-left:190px}` — vistas no-Home
+- `#view-home{padding-left:0!important}` — Home sin padding extra
+- `body.sb-hidden .view-panel{padding-left:0!important}` — padding se quita al ocultar sidebar
+- iPod: fuera de `#desktop-area`, `position:absolute;left:50%;transform:translateX(-50%)` relativo a `#app-main`
 
 ## Funciones clave
 | Función | Qué hace |
