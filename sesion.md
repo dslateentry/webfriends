@@ -36,9 +36,10 @@
 - **Auth**: El inicio de sesión (Login) requiere Email + Password debido a políticas nativas de Supabase. El Registro captura Email, Password y Username.
 - **Profiles**: Triggers en Postgres (`handle_new_user`) para crear perfiles. 
 
-### Últimos cambios (v12.7)
-- **iPod Responsive**: Se removió `position: fixed` para que fluya en el DOM debajo de los mensajes y se adapte al ancho.
-- **iPod Controles**: Botones Play/Pause cambiados por ▶/⏸. Video arranca automáticamente.
+### Últimos cambios (v12.8)
+- **iPod FIXED abajo**: `position:fixed` al fondo del viewport, independiente de los mensajes. Se oculta en otras vistas.
+- **Sidebar toggle**: reposiciona el iPod al colapsar/expandir (margin-left 92px ↔ 0)
+- **Responsive**: `max-width:min(360px, calc(100vw - 220px))`
 - **Username Mapeo**: Resuelto bug donde se mostraba el email en lugar del nombre de usuario. Ahora usa `C.user_metadata.username` y el input de Avatar Studio.
 - **Avatar Display Name**: Agregado input en Avatar Studio que se vincula con la tarjeta del escritorio.
 - **Botón Logout**: Añadido (🚪) en la parte inferior del Sidebar.
