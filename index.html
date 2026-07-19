@@ -880,9 +880,9 @@ setTimeout(()=>{document.getElementById('ipod-anchor').style.display='flex';upda
 // Restore saved YouTube & Spotify on load
 setTimeout(()=>{
   const yt=localStorage.getItem('wf_yt');
-  if(yt){document.getElementById('yt-url').value=yt;}
-  const sp=localStorage.getItem('wf_sp');if(sp){document.getElementById('spotify-url').value=sp;}
-},1000);
+  if(yt){document.getElementById('yt-url').value=yt;playYT();}
+  const sp=localStorage.getItem('wf_sp');if(sp){document.getElementById('spotify-url').value=sp;embedSpotify();}
+},1200);
 </script>
 </body>
 </html>
