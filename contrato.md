@@ -1,86 +1,26 @@
-# Contrato de Desarrollo - WebFRIENDS
+# CONTRATO DE DESARROLLO - WebFRIENDS
 
-> ⚡ **SKILLS**: `frontend-design`, `design-taste-frontend`, `ui-ux-pro-max`, `find-skills`, `threejs`, `motion-doctrine`, `figma-implement-design`, `figma-create-design-system-rules`, `supabase-help`, `a11y-testing`
+Al modificar o expandir el proyecto **WebFRIENDS**, los agentes de IA (y desarrolladores) deben adherirse ESTRICTAMENTE a las siguientes reglas:
 
----
+## 1. Arquitectura KISS (Keep It Simple, Stupid)
+- **Archivo único**: TODO el HTML, CSS y JavaScript principal debe vivir en `index.html`. No separar en múltiples archivos ni usar empaquetadores como Webpack, Vite, React, etc.
+- **Cero dependencias pesadas**: No se permite npm, node_modules, ni frameworks. Solo usar CDNs autorizados (Supabase, PeerJS, Tailwind si aplica, fuentes de Google Fonts).
 
-## 1. Contexto
-Plataforma web privada para grupo de amigos (5-20 personas). Estética Y2K maximalista, Neocities, Gyaru, Anime 90s.
+## 2. Estética Y2K / Frutiger Aero
+- **Fidelidad Visual**: Mantener y respetar los estilos visuales: ventanas arrastrables estilo Windows 95/XP, degradados Y2K, elementos holográficos, bordes inset/outset 3D, cursores pixelados y componentes retro (iPod, Tamagotchi, Flip Phone).
+- **Fuentes y Colores**: Usar tipografías declaradas en el CSS base ('Silkscreen', 'Press Start 2P', 'Comic Sans MS'). Evitar blancos o negros absolutos a menos que sea intencional; usar el esquema de variables `var(--pink)`, `var(--cyan)`, etc.
 
----
+## 3. Autenticación y Backend (Supabase)
+- **Supabase es la fuente de verdad**: Todo dato relacional y persistente a largo plazo debe ir a Supabase.
+- **Regla Intocable de Auth**: El inicio de sesión (Login) en Supabase SIEMPRE debe ser con Email y Password. La API nativa no permite login directo con Username. El registro (Sign Up) debe recopilar el Username para guardarlo en `user_metadata` o la tabla `profiles`.
+- El frontend debe mapear visualmente los perfiles usando `user_metadata.username` para proteger la privacidad del correo.
 
-## 2. Stack y Restricciones
-- **Archivo único**: `index.html` (HTML + CSS + JS)
-- **Sin build**: Cero webpack, vite, npm
-- **Sin frameworks**: Vanilla JS puro
-- **CDNs**: Tailwind CSS, Supabase JS, PeerJS, Google Fonts (VT323, Silkscreen, Press Start 2P, Orbitron)
+## 4. DOM y Manipulación JS
+- **No romper el Markup**: NO borrar IDs ni clases existentes. Muchos componentes (como el iPod o los popups Win95) dependen de estilos en cascada e identificadores precisos. 
+- Si se modifica el layout (ej. hacer el iPod responsive), adapta el CSS (usando flexbox, flow natural, etc.) pero mantén los selectores que el JS utiliza (ej: `#ipod-anchor`, `#ipod-play`).
+- **Event Listeners**: Usa funciones inline (`onclick=""`) o listeners atados en el DOMContentLoaded para mantener la simplicidad y lectura lineal en un solo archivo.
 
-### Credenciales
-- Supabase URL: `https://gtizbvbufskdkemtuems.supabase.co`
-- Anon Key: `sb_publishable_TH4BwX7f0byE09zRWdtVtg_TyczbAP3`
-
----
-
-## 3. Arquitectura v12.0 — SPA Hybrid
-
-```
-┌─ Sidebar ────┬── Main Content ──────────────────────┬─ Widgets ─┐
-│ 185px        │ 8 Views (SPA toggle)                 │ 🎵 Winamp │
-│ collapsible  │                                       │ 🥚 Tama   │
-│              │ Desktop: iPod+GIFs+burbujas+game btns│ 📺 TV     │
-│ ✦ Title     │ Avatar: Bratz PNGs + Sims bubbles     │           │
-│ ▸ Desktop   │ Hub: MySpace panels × 6               │           │
-│ ▸ Avatar    │ Food: Gothic/Fanzine cards            │ 📱 RAZR   │
-│ ▸ Hub       │ Blog: MS Paint windows                │           │
-│ ▸ Food      │ Pinboard: cork notes                  │           │
-│ ▸ Notepad   │ Calendar: monthly grid                │           │
-│ ▸ Pinboard  │ Album: cork photos + Arcade           │           │
-│ ▸ Calendar  │                                       │           │
-│ ▸ Album     │                                       │           │
-│             │                                       │           │
-│ ★ Theme 🌙  │                                       │           │
-│ ★ Music ♫   │                                       │           │
-│ ★ Emoji 💖  │                                       │           │
-│ ★ Note 📝   │                                       │           │
-│ Clock 00:00 │                                       │           │
-└─────────────┴───────────────────────────────────────┴───────────┘
-  Pop-ups Win95 (z-index 720+, arrastrables):
-  popup-tama | popup-winamp | popup-chat | popup-tv
-```
-
----
-
-## 4. Paleta y Diseño
-
-| Variable | Hex | Uso |
-|----------|-----|-----|
-| `--pink` | #ff1493 | Bordes, acentos, glow |
-| `--cyan` | #0ff | Acento secundario |
-| `--lime` | #cf0 | CTA, activo |
-| `--purple` | #c471ed | Titlebar gradiente |
-| `--bg` | #0a0a14 | Fondo night mode |
-| `--txt` | #ffeef7 | Texto principal |
-
-**Fondo**: Gradiente animado 400% 20s + 80 estrellas canvas + 35 sparkles + 5 tape strips scrapbook + checkerboard overlay
-
-**Tipografía**: Press Start 2P (headings), Silkscreen (UI), VT323 (body), Comic Sans (post-its)
-
-**Ventanas**: MS Paint con bordes pixelados rosados + Win95 popups con titlebar azul gradiente y botones 3D
-
----
-
-## 5. Seguridad
-- CSP meta tag restrictivo
-- Spotify iframe sandbox: `allow-scripts allow-same-origin`, `allow="encrypted-media"`
-- Ephemeral guest links: UUID v4, TTL 5 min, `sendBeacon` en tab close
-- RLS en Supabase para todas las tablas
-
----
-
-## 6. CDNs
-| CDN | URL | Propósito |
-|-----|-----|-----------|
-| Tailwind CSS | cdn.tailwindcss.com | CSS utilitario |
-| Supabase JS | cdn.jsdelivr.net/npm/@supabase/supabase-js@2 | Backend |
-| PeerJS | unpkg.com/peerjs@1.5.1 | WebRTC P2P |
-| Google Fonts | fonts.googleapis.com | 4 fuentes |
+## 5. Prácticas de Edición y Pushing
+- Leer detalladamente el código antes de editar o reemplazar. Cuidado con el truncamiento de cadenas y el uso de comillas dentro del HTML generado por JS.
+- Validar SIEMPRE que los bloqueos de reemplazo (diffs) apliquen correctamente para evitar errores de sintaxis catastróficos que quiebren el parsing del archivo entero.
+- Hacer `git commit` y `git push` regularmente para reflejar avances en GitHub.
