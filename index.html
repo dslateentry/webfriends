@@ -352,7 +352,7 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
 <div id="auth-overlay">
   <div class="auth-box">
     <h2>✦ WebFRIENDS ✦</h2>
-    <input type="email" class="inp" id="auth-email" placeholder="email..." autocomplete="email">
+    <input type="email" class="inp" id="auth-email" placeholder="your@email.com..." autocomplete="email">
     <input type="password" class="inp" id="auth-pass" placeholder="password..." autocomplete="current-password">
     <input type="text" class="inp hidden" id="auth-user" placeholder="username...">
     <div class="auth-error" id="auth-error"></div>
@@ -423,6 +423,13 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
         <div style="margin-top:6px;">
           <button class="btn sm lime" onclick="randomAvatar2()">🎲 Random</button>
           <button class="btn sm" onclick="saveAvatar2()">💾 Save</button>
+        </div>
+        <!-- Profile photo section -->
+        <div style="margin-top:10px;padding:6px;background:rgba(255,255,255,.03);border-radius:6px;border:1px dashed rgba(255,20,147,.2);">
+          <div style="font-family:Silkscreen;font-size:7px;color:var(--pink2);margin-bottom:4px;">✦ PROFILE PHOTO ✦</div>
+          <input type="file" id="profile-photo-upload" accept="image/*" onchange="uploadProfilePhoto(event)" class="hidden">
+          <button class="btn sm" onclick="document.getElementById('profile-photo-upload').click()">📷 Upload</button>
+          <button class="btn sm" onclick="pickGifAvatar()">🖼 GIFs</button>
         </div>
       </div>
       <div class="av-controls">
@@ -738,6 +745,15 @@ function pickAv(cat,idx){avIdx[cat]=idx;renderAvItems();updateDoll();}
 function updateDoll(){const h=AV.hair[avIdx.hair],t=AV.top[avIdx.top],b=AV.bottom[avIdx.bottom],s=AV.shoes[avIdx.shoes];const dh=document.getElementById('doll-hair'),dt=document.getElementById('doll-top'),db=document.getElementById('doll-pants'),ds=document.getElementById('doll-shoes');if(h){dh.src=h.u;dh.style.display='block';dh.style.width='260px';dh.style.left='0';dh.style.top='-10px';}if(t){dt.src=t.u;dt.style.display='block';dt.style.width='260px';dt.style.left='0';dt.style.top='0';}if(b){db.src=b.u;db.style.display='block';db.style.width='260px';db.style.left='0';db.style.top='0';}if(s){ds.src=s.u;ds.style.display='block';ds.style.width='260px';ds.style.left='0';ds.style.top='0';}}
 function randomAvatar2(){Object.keys(avIdx).forEach(k=>avIdx[k]=Math.floor(Math.random()*AV[k].length));renderAvItems();updateDoll();}
 function saveAvatar2(){toast('Avatar saved!');}
+
+// ── PROFILE PHOTO ──
+function uploadProfilePhoto(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{localStorage.setItem('wf_profile_photo',ev.target.result);updateDeskItems();toast('Profile photo updated!');};r.readAsDataURL(f);}
+function pickGifAvatar(){
+  const gifPool=[...FILM_GIFS,{src:'https://i.pinimg.com/originals/87/e2/e0/87e2e02f70cd4ed3f14d707fc1eb516b.gif',cap:'mood'},{src:'https://i.pinimg.com/originals/46/f1/ac/46f1ac827de4f7a9e5521a864321bb0b.gif',cap:'y2k'},{src:'https://i.pinimg.com/originals/84/9b/0d/849b0d3f428a3e726db7d6ce97d76afb.gif',cap:'girl'}];
+  const html=gifPool.map((g,i)=>'<img src="'+g.src+'" style="width:45px;height:45px;object-fit:cover;cursor:pointer;border:2px solid transparent;border-radius:4px;margin:2px;" onclick="selectGifAvatar(\''+g.src+'\')" title="'+g.cap+'">').join('');
+  const w=window.open('','_blank','width=400,height=300');w.document.write('<html><head><title>Pick GIF</title><style>body{background:#0a0a14;text-align:center;padding:10px;font-family:sans-serif;color:#ff1493;}</style></head><body><h3>Choose a GIF</h3>'+html+'<br><button onclick="window.close()" style="margin-top:8px;">Close</button><script>function selectGifAvatar(u){opener.localStorage.setItem(\"wf_profile_photo\",u);opener.updateDeskItems();window.close();}<\/script></body></html>');
+}
+function selectGifAvatar(u){localStorage.setItem('wf_profile_photo',u);updateDeskItems();toast('Photo updated!');}
 function toggleSimsBubbles(e){e.stopPropagation();const el=document.getElementById('sims-bubbles');el.innerHTML='';const opts=['Pose...','Flirt','Call...','Dance!','Taunt','Sing','High Fashion'];opts.forEach((o,i)=>{const b=document.createElement('div');b.className='sims-bubble';b.textContent=o;b.style.position='absolute';b.style.left=(20+(i*55)%280)+'px';b.style.top=(130+(i%3)*40)+'px';b.onclick=ev=>{ev.stopPropagation();toast('✦ '+o+' ✦');el.innerHTML='';};el.appendChild(b);});setTimeout(()=>{el.innerHTML='';},4000);}
 const hubCats=['Music','Podcasts','TV','Movies','Anime','Games'];const hubData={individual:{},group:{}};hubCats.forEach(c=>{hubData.individual[c]=[];hubData.group[c]=[];});let hubMode='individual';
 function initHub(){renderHub();}function hubTab(m){hubMode=m;renderHub();}
@@ -804,7 +820,7 @@ function initFilmstrip(){const track=document.getElementById('filmstrip-track');
 setTimeout(initFilmstrip,200);
 setTimeout(()=>{const v=['gba','gbb','gbc','gbd'];document.querySelectorAll('.game-btn').forEach(b=>{b.classList.remove('gba','gbb','gbc','gbd');b.classList.add(v[Math.floor(Math.random()*v.length)]);});const sb=document.getElementById('btn-sky');if(sb)sb.textContent=document.body.classList.contains('sky')?'🌙 DARK':'☀️ LIGHT';},100);
 function updateDeskItems(){
-  const EU=[{name:C?C.email.split('@')[0]:'angel_bby',img:C?'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><rect fill=%22%23ff1493%22 width=%2250%22 height=%2250%22/><text fill=%22white%22 x=%2225%22 y=%2232%22 text-anchor=%22middle%22 font-size=%2220%22>'+C.email[0].toUpperCase()+'</text></svg>':'https://i.pinimg.com/originals/68/e3/0c/68e30c98e0c864a77c16a278a49bb230.gif',title:'untitled - Paint'},{name:'angel_bby',img:'https://i.pinimg.com/originals/68/e3/0c/68e30c98e0c864a77c16a278a49bb230.gif',title:'untitled - Paint'},{name:'cyber_kittn',img:'https://i.pinimg.com/originals/87/e2/e0/87e2e02f70cd4ed3f14d707fc1eb516b.gif',title:'my_art.bmp'},{name:'vampy_gurl',img:'https://i.pinimg.com/originals/46/f1/ac/46f1ac827de4f7a9e5521a864321bb0b.gif',title:'avatar.gif'},{name:'pix3l_prince',img:'https://i.pinimg.com/originals/84/9b/0d/849b0d3f428a3e726db7d6ce97d76afb.gif',title:'selfie.jpg'},{name:'st4r_boy',img:'https://i.pinimg.com/originals/03/b7/7b/03b77be9013ae731c17809cfb743e36e.gif',title:'mypic.png'},{name:'gl1tter_g0th',img:'https://i.pinimg.com/originals/54/65/7f/54657fdf199b1c3f7a2e8f355e20496b.gif',title:'photo.bmp'}];
+  const pp=localStorage.getItem('wf_profile_photo');const EU=[{name:C?C.email.split('@')[0]:'angel_bby',img:pp||'https://i.pinimg.com/originals/68/e3/0c/68e30c98e0c864a77c16a278a49bb230.gif',title:'untitled - Paint'},{name:C?C.email.split('@')[0]:'angel_bby',img:C?'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><rect fill=%22%23ff1493%22 width=%2250%22 height=%2250%22/><text fill=%22white%22 x=%2225%22 y=%2232%22 text-anchor=%22middle%22 font-size=%2220%22>'+C.email[0].toUpperCase()+'</text></svg>':'https://i.pinimg.com/originals/68/e3/0c/68e30c98e0c864a77c16a278a49bb230.gif',title:'untitled - Paint'},{name:'angel_bby',img:'https://i.pinimg.com/originals/68/e3/0c/68e30c98e0c864a77c16a278a49bb230.gif',title:'untitled - Paint'},{name:'cyber_kittn',img:'https://i.pinimg.com/originals/87/e2/e0/87e2e02f70cd4ed3f14d707fc1eb516b.gif',title:'my_art.bmp'},{name:'vampy_gurl',img:'https://i.pinimg.com/originals/46/f1/ac/46f1ac827de4f7a9e5521a864321bb0b.gif',title:'avatar.gif'},{name:'pix3l_prince',img:'https://i.pinimg.com/originals/84/9b/0d/849b0d3f428a3e726db7d6ce97d76afb.gif',title:'selfie.jpg'},{name:'st4r_boy',img:'https://i.pinimg.com/originals/03/b7/7b/03b77be9013ae731c17809cfb743e36e.gif',title:'mypic.png'},{name:'gl1tter_g0th',img:'https://i.pinimg.com/originals/54/65/7f/54657fdf199b1c3f7a2e8f355e20496b.gif',title:'photo.bmp'}];
   const home=document.getElementById('view-home');
   if(!home||!home.classList.contains('active')){document.querySelectorAll('.desk-card').forEach(c=>c.remove());return;}
   document.querySelectorAll('.desk-card').forEach(c=>c.remove());
