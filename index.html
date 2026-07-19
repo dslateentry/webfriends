@@ -54,8 +54,8 @@ body{
 .tape-strip{position:fixed;z-index:3;pointer-events:none;height:14px;background:rgba(0,191,255,.12);border:1px dashed rgba(0,100,200,.1);transform:rotate(var(--r));}
 
 /* ── iPod / MP4 PLAYER ── */
-.ipod-player{background:linear-gradient(180deg,#e8e8e8,#d0d0d0,#c8c8c8);border:4px solid #aaa;border-radius:16px;padding:10px 12px 14px;display:inline-block;box-shadow:0 6px 20px rgba(0,0,0,.3),inset 0 2px 0 rgba(255,255,255,.5);}
-.ipod-screen{background:#000;border:3px inset #888;border-radius:4px;overflow:hidden;width:280px;height:180px;display:flex;align-items:center;justify-content:center;}
+.ipod-player{background:linear-gradient(180deg,#e8e8e8,#d0d0d0,#c8c8c8);border:4px solid #aaa;border-radius:16px;padding:10px 12px 14px;display:inline-block;box-shadow:0 6px 20px rgba(0,0,0,.3),inset 0 2px 0 rgba(255,255,255,.5);max-width:360px;}
+.ipod-screen{background:#000;border:3px inset #888;border-radius:4px;overflow:hidden;width:100%;max-width:320px;height:180px;display:flex;align-items:center;justify-content:center;}
 .ipod-screen iframe{width:100%;height:100%;border:none;}
 .ipod-wheel{display:flex;justify-content:center;gap:20px;margin-top:8px;}
 .ipod-btn{width:32px;height:32px;border-radius:50%;background:linear-gradient(180deg,#fff,#ddd);border:2px solid #999;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.2);}
@@ -90,7 +90,7 @@ body{
 #sidebar{position:fixed;left:0;top:0;bottom:0;z-index:950;width:185px;background:linear-gradient(180deg,rgba(0,0,0,.94),rgba(20,5,40,.96));border-right:3px solid var(--pink);display:flex;flex-direction:column;gap:3px;padding:8px 6px;box-shadow:4px 0 20px rgba(255,20,147,.2);backdrop-filter:blur(10px);overflow-y:auto;overflow-x:hidden;}
 .sb-start{background:linear-gradient(180deg,var(--pink),#8b1a56);border:2px solid rgba(255,255,255,.4);border-radius:8px;padding:6px 10px;cursor:pointer;font-family:'Silkscreen',monospace;font-size:8px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.3);text-align:center;margin-bottom:4px;transition:all .1s;}
 .sb-start:hover{background:var(--pink2);transform:scale(1.03);}
-.sb-btn{background:rgba(255,255,255,.03);border:1px solid rgba(255,105,180,.18);padding:7px 12px;cursor:pointer;font-family:'Silkscreen',monospace;font-size:8px;color:var(--txt2);border-radius:4px;transition:all .12s;display:flex;align-items:center;gap:8px;text-align:left;}
+.sb-btn{background:rgba(255,255,255,.03);border:1px solid rgba(255,105,180,.18);padding:8px 12px;cursor:pointer;font-family:'Silkscreen',monospace;font-size:9px;color:var(--txt2);border-radius:4px;transition:all .12s;display:flex;align-items:center;gap:8px;text-align:left;}
 .sb-btn:hover{background:rgba(255,105,180,.18);color:var(--txt);border-color:var(--pink);transform:translateX(3px);}
 .sb-btn.active{background:linear-gradient(180deg,var(--pink),var(--pink2));color:#fff;border-color:var(--pink2);box-shadow:0 0 12px rgba(255,20,147,.4),inset 0 1px 0 rgba(255,255,255,.2);}
 .sb-btn span{font-size:15px;width:20px;text-align:center;}
@@ -523,14 +523,14 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
   
   <button class="sb-start" onclick="toggleStart()">✦ MENU ✦</button>
   
-  <button class="sb-btn active" data-view="view-home"><span>🖥️</span>Desktop</button>
+  <button class="sb-btn active" data-view="view-home"><span>🖥️</span>Inicio</button>
   <button class="sb-btn" data-view="view-avatar"><span>👗</span>Avatar Studio</button>
-  <button class="sb-btn" data-view="view-hub"><span>🎯</span>Hub</button>
-  <button class="sb-btn" data-view="view-food"><span>🍕</span>Food Diary</button>
+  <button class="sb-btn" data-view="view-hub"><span>🎯</span>Feed</button>
+  <button class="sb-btn" data-view="view-food"><span>🍕</span>Foodie</button>
   <button class="sb-btn" data-view="view-blog"><span>📝</span>Notepad</button>
-  <button class="sb-btn" data-view="view-postit"><span>📌</span>Pinboard</button>
-  <button class="sb-btn" data-view="view-calendar"><span>📅</span>Calendar</button>
-  <button class="sb-btn" data-view="view-album"><span>📷</span>Album</button>
+  <button class="sb-btn" data-view="view-postit"><span>📌</span>Notitas 💕</button>
+  <button class="sb-btn" data-view="view-calendar"><span>📅</span>Calendario</button>
+  <button class="sb-btn" data-view="view-album"><span>📷</span>Fotolog</button>
   
   <div class="sb-divider"></div>
   
