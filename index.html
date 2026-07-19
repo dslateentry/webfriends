@@ -109,7 +109,7 @@ body{
 .start-item span{font-size:14px;}
 
 /* ── MAIN CONTENT ── */
-#app-main{position:absolute;left:185px;top:0;right:0;bottom:0;overflow-y:auto;overflow-x:hidden;padding:8px;}
+#app-main{flex:1;overflow-y:auto;overflow-x:hidden;padding:8px;margin-left:185px;}
 
 /* ── SKY BACKGROUND TOGGLE ── */
 body.sky #star-cnv{opacity:.5;}
@@ -243,11 +243,11 @@ body.sky .start-item:hover{background:rgba(255,105,180,.15);}
 .sb-toggle{position:fixed;left:0;top:50%;z-index:955;background:var(--pink);border:2px solid rgba(255,255,255,.4);border-left:none;border-radius:0 6px 6px 0;width:14px;height:50px;cursor:pointer;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;writing-mode:vertical-lr;font-family:'Silkscreen',monospace;transition:all .2s;box-shadow:2px 0 8px rgba(255,20,147,.3);}
 .sb-toggle:hover{background:var(--pink2);}
 body.sb-hidden #sidebar{transform:translateX(-185px);}
-body.sb-hidden #app-main{left:0;}
+body.sb-hidden #app-main{margin-left:0;}
 body.sb-hidden .sb-toggle{left:0;}
 body.sb-hidden #start-menu{left:0;margin-left:10px;}
 #sidebar{transition:transform .3s ease;}
-#app-main{transition:left .3s ease;}
+#app-main{transition:margin-left .3s ease;}
 
 /* ── AUDIT: better contrast ── */
 .w-popup .w-body{background:#fff;color:#111;}
