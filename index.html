@@ -881,15 +881,10 @@ setTimeout(()=>{
   const yt=localStorage.getItem('wf_yt');
   if(yt){
     document.getElementById('yt-url').value=yt;
-    const m=yt.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
-    if(m){
-      document.getElementById('ipod-screen').innerHTML='<iframe src="https://www.youtube.com/embed/'+m[1]+'?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen style="width:100%;height:100%;border:none;background:#000;"></iframe>';
-      document.getElementById('sb-music').textContent='YT PLAYING';
-      const btn=document.getElementById('ipod-play');if(btn)btn.textContent='▶';
-    }
+    playYT();
   }
   const sp=localStorage.getItem('wf_sp');if(sp){document.getElementById('spotify-url').value=sp;embedSpotify();}
-},1000);
+},1200);
 </script>
 
 </body>
