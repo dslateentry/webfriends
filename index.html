@@ -371,7 +371,7 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
 
   <!-- VIEW: HOME / DESKTOP -->
   <div id="view-home" class="view-panel active">
-    <div id="desktop-area" style="position:relative;min-height:calc(100vh - 60px);padding-bottom:360px;">
+    <div id="desktop-area" style="position:relative;min-height:calc(100vh - 60px);">
       <!-- GIF Polaroid Filmstrip -->
       <div class="filmstrip-wrap">
         <div class="filmstrip-track" id="filmstrip-track"></div>
@@ -380,34 +380,36 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
       <!-- iPhone message bubbles -->
       <div class="iphone-msg" id="iphone-msgs" style="min-height:60px;margin-bottom:8px;"></div>
       
+      <!-- iPod player STICKY at bottom -->
+      <div id="ipod-anchor" style="position:sticky;bottom:0;z-index:500;display:flex;flex-direction:column;align-items:center;padding-top:12px;background:linear-gradient(180deg,transparent,rgba(10,0,20,.9) 30%);">
+      <div class="ipod-player" style="max-width:min(360px, calc(100vw - 220px));">
+        <div class="ipod-label">✦ WebFRIENDS iPod ✦</div>
+        <div class="ipod-screen" id="ipod-screen">
+          <div style="color:#0f0;text-align:center;font-family:'Silkscreen',monospace;font-size:10px;">♪<br>PASTE<br>YOUTUBE<br>URL<br>♪</div>
+        </div>
+        <div class="ipod-wheel">
+          <button class="ipod-btn" onclick="playPrev()" style="color:#333;font-weight:bold;">⏮</button>
+          <button class="ipod-btn" id="ipod-play" onclick="playYT()" style="color:#333;font-weight:bold;">▶</button>
+          <button class="ipod-btn" onclick="playNext()" style="color:#333;font-weight:bold;">⏭</button>
+        </div>
+        <div class="ipod-url-bar">
+          <input type="text" id="yt-url" placeholder="youtube.com/watch?v=..." onkeydown="if(event.key==='Enter')playYT()">
+          <button class="ipod-btn" onclick="playYT()" style="font-size:10px;color:#333;font-weight:bold;">GO</button>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:6px;display:flex;gap:6px;justify-content:center;" id="game-btns">
+        <button class="game-btn gba" onclick="emojiDrop()" id="btn-emoji">💖 EMOJI DROP</button>
+        <button class="game-btn gbb" onclick="spawnPostIt()" id="btn-postit">📝 POST-IT</button>
+        <button class="game-btn gbc" onclick="toggleSky()" id="btn-sky">☀️ LIGHT</button>
+      </div>
+      </div>
+      
       </div>
       
     </div>
   </div>
 
-  <!-- iPod player FIXED at bottom -->
-  <div id="ipod-anchor" style="position:fixed;bottom:8px;left:50%;transform:translateX(-50%);margin-left:92px;z-index:500;display:flex;flex-direction:column;align-items:center;max-width:min(360px, calc(100vw - 220px));">
-  <div class="ipod-player">
-    <div class="ipod-label">✦ WebFRIENDS iPod ✦</div>
-    <div class="ipod-screen" id="ipod-screen">
-      <div style="color:#0f0;text-align:center;font-family:'Silkscreen',monospace;font-size:10px;">♪<br>PASTE<br>YOUTUBE<br>URL<br>♪</div>
-    </div>
-    <div class="ipod-wheel">
-      <button class="ipod-btn" onclick="playPrev()" style="color:#333;font-weight:bold;">⏮</button>
-      <button class="ipod-btn" id="ipod-play" onclick="playYT()" style="color:#333;font-weight:bold;">▶</button>
-      <button class="ipod-btn" onclick="playNext()" style="color:#333;font-weight:bold;">⏭</button>
-    </div>
-    <div class="ipod-url-bar">
-      <input type="text" id="yt-url" placeholder="youtube.com/watch?v=..." onkeydown="if(event.key==='Enter')playYT()">
-      <button class="ipod-btn" onclick="playYT()" style="font-size:10px;color:#333;font-weight:bold;">GO</button>
-    </div>
-  </div>
-  <div style="text-align:center;margin-top:6px;display:flex;gap:6px;justify-content:center;" id="game-btns">
-    <button class="game-btn gba" onclick="emojiDrop()" id="btn-emoji">💖 EMOJI DROP</button>
-    <button class="game-btn gbb" onclick="spawnPostIt()" id="btn-postit">📝 POST-IT</button>
-    <button class="game-btn gbc" onclick="toggleSky()" id="btn-sky">☀️ LIGHT</button>
-  </div>
-  </div>
+
 
 <!-- ═══ LEFT SIDEBAR ═══ -->
       
