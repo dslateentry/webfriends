@@ -830,8 +830,12 @@ function updateDeskItems(){
   const myTitle = un || 'untitled - Paint';
   const EU=[
     {name: myUname, img: pp||'https://i.pinimg.com/originals/68/e3/0c/68e30c98e0c864a77c16a278a49bb230.gif', title: myTitle},
-    {name: myUname, img: C?`data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><rect fill=%22%23ff1493%22 width=%2250%22 height=%2250%22/><text fill=%22white%22 x=%2225%22 y=%2232%22 text-anchor=%22middle%22 font-size=%2220%22>${C.email[0].toUpperCase()}</text></svg>`:'https://i.pinimg.com/originals/68/e3/0c/68e30c98e0c864a77c16a278a49bb230.gif', title: myTitle},
-    {name:'angel_bby',img:'https://i.pinimg.com/originals/68/e3/0c/68e30c98e0c864a77c16a278a49bb230.gif',title:'untitled - Paint'},{name:'cyber_kittn',img:'https://i.pinimg.com/originals/87/e2/e0/87e2e02f70cd4ed3f14d707fc1eb516b.gif',title:'my_art.bmp'},{name:'vampy_gurl',img:'https://i.pinimg.com/originals/46/f1/ac/46f1ac827de4f7a9e5521a864321bb0b.gif',title:'avatar.gif'},{name:'pix3l_prince',img:'https://i.pinimg.com/originals/84/9b/0d/849b0d3f428a3e726db7d6ce97d76afb.gif',title:'selfie.jpg'},{name:'st4r_boy',img:'https://i.pinimg.com/originals/03/b7/7b/03b77be9013ae731c17809cfb743e36e.gif',title:'mypic.png'},{name:'gl1tter_g0th',img:'https://i.pinimg.com/originals/54/65/7f/54657fdf199b1c3f7a2e8f355e20496b.gif',title:'photo.bmp'}
+    {name:'angel_bby',img:'https://i.pinimg.com/originals/c1/b7/90/c1b79059622fb0c0cda30a7895ac4fb8.gif',title:'untitled - Paint'},
+    {name:'cyber_kittn',img:'https://i.pinimg.com/originals/87/e2/e0/87e2e02f70cd4ed3f14d707fc1eb516b.gif',title:'my_art.bmp'},
+    {name:'vampy_gurl',img:'https://i.pinimg.com/originals/46/f1/ac/46f1ac827de4f7a9e5521a864321bb0b.gif',title:'avatar.gif'},
+    {name:'pix3l_prince',img:'https://i.pinimg.com/originals/84/9b/0d/849b0d3f428a3e726db7d6ce97d76afb.gif',title:'selfie.jpg'},
+    {name:'st4r_boy',img:'https://i.pinimg.com/originals/03/b7/7b/03b77be9013ae731c17809cfb743e36e.gif',title:'mypic.png'},
+    {name:'gl1tter_g0th',img:'https://i.pinimg.com/originals/54/65/7f/54657fdf199b1c3f7a2e8f355e20496b.gif',title:'photo.bmp'}
   ];
   const home=document.getElementById('view-home');
   if(!home||!home.classList.contains('active')){document.querySelectorAll('.desk-card').forEach(c=>c.remove());return;}
