@@ -336,9 +336,30 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
 .inp.w95{background:#fff;border:2px inset #808080;color:#000;font-family:'MS Sans Serif',Tahoma,sans-serif;padding:4px 6px;}
 #toast{position:fixed;top:10px;right:10px;z-index:999;background:var(--panel);border:3px solid var(--pink);padding:8px 16px;font-size:11px;color:var(--txt);box-shadow:var(--shadow);display:none;border-radius:6px;animation:tIn .2s ease-out;}
 @keyframes tIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
-.hidden{display:none!important;}</style>
+.hidden{display:none!important;}
+
+/* ── AUTH OVERLAY ── */
+#auth-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.auth-box{background:linear-gradient(180deg,rgba(20,5,40,.98),rgba(10,0,20,.98));border:3px solid var(--pink);border-radius:12px;padding:24px;min-width:300px;box-shadow:var(--shadow),0 0 40px rgba(255,20,147,.3);text-align:center;}
+.auth-box h2{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--pink);margin-bottom:16px;text-shadow:0 0 8px rgba(255,20,147,.5);}
+.auth-box input{display:block;width:100%;margin-bottom:8px;}
+.auth-box .auth-error{color:var(--red);font-size:10px;min-height:16px;margin:4px 0;}
+.auth-box .auth-link{color:var(--cyan);font-size:10px;cursor:pointer;margin-top:8px;text-decoration:underline;}</style>
 </head>
 <body>
+
+<!-- AUTH OVERLAY -->
+<div id="auth-overlay">
+  <div class="auth-box">
+    <h2>✦ WebFRIENDS ✦</h2>
+    <input type="email" class="inp" id="auth-email" placeholder="email..." autocomplete="email">
+    <input type="password" class="inp" id="auth-pass" placeholder="password..." autocomplete="current-password">
+    <input type="text" class="inp hidden" id="auth-user" placeholder="username...">
+    <div class="auth-error" id="auth-error"></div>
+    <button class="game-btn gbb" id="auth-btn" onclick="doAuth()" style="width:100%;">LOGIN</button>
+    <div class="auth-link" id="auth-toggle" onclick="toggleAuthMode()">New? Register here</div>
+  </div>
+</div>
 
 <canvas id="star-cnv"></canvas>
 <div id="scanlines"></div>
@@ -605,7 +626,7 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
       </div>
       <div class="bb-controls">
         <button class="bb-btn" onclick="waPrev()">⏮</button>
-        <button class="bb-btn" onclick="waPlay()">▶</button>
+        <button class="bb-btn" id="bb-play" onclick="waPlay()">▶</button>
         <button class="bb-btn" onclick="waNext()">⏭</button>
         <button class="bb-btn" onclick="document.querySelector('.bb-cd')?.classList.toggle('paused')">⏯</button>
       </div>
@@ -660,6 +681,29 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
   </div>
 </div><script>
 const SB_URL='https://gtizbvbufskdkemtuems.supabase.co';const SB_KEY='sb_publishable_TH4BwX7f0byE09zRWdtVtg_TyczbAP3';const sb=supabase.createClient(SB_URL,SB_KEY);let C=null;
+
+// ── AUTH ──
+let authMode='login';
+function toggleAuthMode(){authMode=authMode==='login'?'register':'login';document.getElementById('auth-user').classList.toggle('hidden',authMode==='login');document.getElementById('auth-btn').textContent=authMode==='login'?'LOGIN':'REGISTER';document.getElementById('auth-toggle').textContent=authMode==='login'?'New? Register here':'Have account? Login';document.getElementById('auth-error').textContent='';}
+async function doAuth(){
+  const e=document.getElementById('auth-email').value.trim(),p=document.getElementById('auth-pass').value,u=document.getElementById('auth-user').value.trim();
+  if(!e||!p||p.length<6){document.getElementById('auth-error').textContent='Email + password (6+ chars) required';return;}
+  if(authMode==='login'){
+    const{data,error}=await sb.auth.signInWithPassword({email:e,password:p});
+    if(error){document.getElementById('auth-error').textContent=error.message;return;}
+    C=data.user;document.getElementById('auth-overlay').style.display='none';toast('Welcome back! 💕');
+  }else{
+    if(!u){document.getElementById('auth-error').textContent='Username required';return;}
+    const{data,error}=await sb.auth.signUp({email:e,password:p,options:{data:{username:u}}});
+    if(error){document.getElementById('auth-error').textContent=error.message;return;}
+    if(data.user){C=data.user;document.getElementById('auth-overlay').style.display='none';toast('Welcome, @'+u+'! 💕');}
+  }
+}
+async function checkSession(){
+  const{data:{session}}=await sb.auth.getSession();
+  if(session){C=session.user;document.getElementById('auth-overlay').style.display='none';}else{document.getElementById('auth-overlay').style.display='flex';}
+}
+setTimeout(checkSession,300);
 function toast(m,d=2500){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',d);}
 function initStars(){const c=document.getElementById('star-cnv'),ctx=c.getContext('2d');c.width=window.innerWidth;c.height=window.innerHeight;const s=[];for(let i=0;i<80;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:.5+Math.random()*2,c:['#ff1493','#0ff','#cf0','#fff','#da70d6'][i%5],sp:.005+.01*Math.random(),a:Math.random()*Math.PI*2});function draw(){ctx.clearRect(0,0,c.width,c.height);s.forEach(p=>{p.a+=p.sp;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.c;ctx.globalAlpha=.3+.7*Math.abs(Math.sin(p.a));ctx.fill();});ctx.globalAlpha=1;requestAnimationFrame(draw);}draw();}
 function initSparkles(){const cl=['#ff1493','#0ff','#cf0','#da70d6','#ffd700','#fff','#ff69b4','#40e0d0'];for(let i=0;i<35;i++){const d=document.createElement('div');d.className='sparkle';d.style.left=Math.random()*100+'%';d.style.top=Math.random()*100+'%';d.style.background=cl[i%8];d.style.setProperty('--d',(1.2+Math.random()*3)+'s');d.style.setProperty('--c',cl[i%8]);d.style.animationDelay=Math.random()*4+'s';document.body.appendChild(d);}}
@@ -717,10 +761,10 @@ function tamaAction(a){if(a==='feed')tama.hunger=Math.min(100,tama.hunger+15);if
 function updateTamaUI(){document.getElementById('thb').style.width=tama.hunger+'%';document.getElementById('thv').textContent=tama.hunger;document.getElementById('thpb').style.width=tama.happiness+'%';document.getElementById('thpv').textContent=tama.happiness;document.getElementById('teb').style.width=tama.energy+'%';document.getElementById('tev').textContent=tama.energy;const ss=['🥚','🐣','🐤','🐔'];const disp=document.getElementById('tama-disp');if(disp){disp.textContent=ss[tama.stage]||'🥚';disp.className='tama-creature'+(tama.stage>=3?' adult':tama.stage>=2?' teen':' baby');}document.getElementById('tama-name').textContent='TAMA v'+tama.stage;document.getElementById('tama-age').textContent=Math.floor((Date.now()-(tama.born||Date.now()))/86400000)||0;document.getElementById('tama-wt').textContent=5+tama.stage*5;}
 function saveTama2(){if(!tama.born)tama.born=Date.now();localStorage.setItem('wf12_tama',JSON.stringify(tama));}
 function initWinamp(){}
-function waPlay(){const t=document.getElementById('wa-track');const cd=document.querySelector('.bb-cd');const btn=document.querySelector('.bb-controls .bb-btn:nth-child(2)');if(t.textContent.includes('PLAYING')){t.textContent='♫ PAUSED ♫';cd?.classList.add('paused');if(btn)btn.textContent='▶';}else{t.textContent='♫ PLAYING ♫';cd?.classList.remove('paused');if(btn)btn.textContent='⏸';}}
+function waPlay(){const t=document.getElementById('wa-track');const cd=document.querySelector('.bb-cd');const btn=document.getElementById('bb-play');if(t.textContent.includes('PLAYING')){t.textContent='♫ PAUSED ♫';cd?.classList.add('paused');if(btn)btn.textContent='▶';}else{t.textContent='♫ PLAYING ♫';cd?.classList.remove('paused');if(btn)btn.textContent='⏸';}}
 function waPrev(){document.getElementById('wa-track').textContent='♫ PREV ♫';}
 function waNext(){document.getElementById('wa-track').textContent='♫ NEXT ♫';}
-function embedSpotify(){let u=document.getElementById('spotify-url').value.trim();if(u.includes('?'))u=u.split('?')[0];const m=u.match(/spotify\.com\/(track|album|playlist)\/([a-zA-Z0-9]{22})/);if(!m){toast('Invalid URL: '+u.substring(0,40));return;}localStorage.setItem('wf_sp',u);const el=document.getElementById('spotify-embed');el.style.height='80px';el.style.overflow='hidden';el.style.cursor='pointer';el.onclick=function(){window.open(u,'_blank');};el.innerHTML='<iframe src="https://open.spotify.com/embed/'+m[1]+'/'+m[2]+'" width="100%" height="80" frameborder="0" allow="encrypted-media" style="border-radius:4px;"></iframe>';document.getElementById('wa-track').textContent='SPOTIFY LOADED';document.querySelector('.bb-cd')?.classList.remove('paused');const btn=document.querySelector('.bb-controls .bb-btn:nth-child(2)');if(btn)btn.textContent='Pause';const sm=document.getElementById('sb-music');if(sm)sm.textContent='Spotify';toast('Loaded! (Click if blocked)');}function sendChat(){const i=document.getElementById('chat-input');if(!i||!i.value.trim())return;addChatMsg(C?.email||'you',i.value.trim());i.value='';const fp=document.getElementById('fp-msg');if(fp)fp.innerHTML='1 NEW<br>MSG';}
+function embedSpotify(){let u=document.getElementById('spotify-url').value.trim();if(u.includes('?'))u=u.split('?')[0];const m=u.match(/spotify\.com\/(track|album|playlist)\/([a-zA-Z0-9]{22})/);if(!m){toast('Invalid URL: '+u.substring(0,40));return;}localStorage.setItem('wf_sp',u);const el=document.getElementById('spotify-embed');el.style.height='80px';el.style.overflow='hidden';el.style.cursor='pointer';el.onclick=function(){window.open(u,'_blank');};el.innerHTML='<iframe src="https://open.spotify.com/embed/'+m[1]+'/'+m[2]+'" width="100%" height="80" frameborder="0" allow="encrypted-media" style="border-radius:4px;"></iframe>';document.getElementById('wa-track').textContent='SPOTIFY LOADED';document.querySelector('.bb-cd')?.classList.remove('paused');const btn=document.querySelector('.bb-play');if(btn)btn.textContent='Pause';const sm=document.getElementById('sb-music');if(sm)sm.textContent='Spotify';toast('Loaded! (Click if blocked)');}function sendChat(){const i=document.getElementById('chat-input');if(!i||!i.value.trim())return;addChatMsg(C?.email||'you',i.value.trim());i.value='';const fp=document.getElementById('fp-msg');if(fp)fp.innerHTML='1 NEW<br>MSG';}
 function addChatMsg(u,m){const c=document.getElementById('chat-msgs');if(!c)return;if(c.querySelector('div[style]'))c.innerHTML='';c.innerHTML+='<div style="margin-bottom:2px;color:#333;"><b style="color:var(--pink);">'+u+':</b> '+m+'</div>';c.scrollTop=c.scrollHeight;}
 let gToken=null;
 function generateGuestLink(){const t=crypto.randomUUID();gToken=t;const b=document.getElementById('guest-link-box');b.classList.remove('hidden');b.innerHTML='<div style="word-break:break-all;font-size:8px;">#guest/'+t+'</div><div style="font-family:Orbitron;font-size:14px;color:var(--lime);" id="g-timer">05:00</div><button class="btn w95" onclick="navigator.clipboard.writeText(\'#guest/'+t+'\');toast(\'Copied!\')">copy</button>';let s=300;const int=setInterval(()=>{s--;const m=Math.floor(s/60),sec=s%60;document.getElementById('g-timer').textContent=String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');if(s<=0){clearInterval(int);b.innerHTML='<span style="color:red;">EXPIRED</span>';}},1000);}
@@ -738,7 +782,7 @@ function emojiDrop(){for(let i=0;i<6;i++){setTimeout(()=>{const e=document.creat
 function spawnPostIt(){const cl=['#fff9a8','#ffb6c1','#e0ffff','#ccff00'];const el=document.createElement('div');el.className='floating-note';el.style.background=cl[Math.floor(Math.random()*cl.length)];el.style.left=(5+Math.random()*70)+'%';el.style.top=(5+Math.random()*65)+'%';const txt=prompt('Post-it text:');if(!txt)return;el.innerHTML='<button class="nx" onclick="this.parentElement.remove()">x</button>'+txt;el.addEventListener('mousedown',noteDrag);document.getElementById('app-main').appendChild(el);}
 function noteDrag(e){const el=e.target.closest('.floating-note');if(!el)return;const ox=e.clientX-el.offsetLeft,oy=e.clientY-el.offsetTop;function mv(ev){el.style.left=(ev.clientX-ox)+'px';el.style.top=(ev.clientY-oy)+'px';}function up(){document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);}document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);}
 function toggleSidebar(){document.body.classList.toggle('sb-hidden');const t=document.querySelector('.sb-toggle');if(t)t.textContent=document.body.classList.contains('sb-hidden')?'▶':'◀';const hidden=document.body.classList.contains('sb-hidden');const anchor=document.getElementById('ipod-anchor');if(anchor)anchor.style.left=hidden?'50%':'calc((100vw + 185px)/2)';updateDeskItems();}
-function playYT(){const u=document.getElementById('yt-url').value.trim();const m=u.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);if(!m){toast('Invalid URL');return;}localStorage.setItem('wf_yt',u);const vid=m[1];const el=document.getElementById('ipod-screen');el.innerHTML='<iframe src="https://www.youtube.com/embed/'+vid+'" allowfullscreen style="width:100%;height:100%;border:none;position:relative;z-index:2;background:#000;"></iframe>';el.onclick=function(){window.open('https://www.youtube.com/watch?v='+vid,'_blank');};el.style.cursor='pointer';document.getElementById('sb-music').textContent='YT PLAYING';document.querySelector('.bb-cd')?.classList.remove('paused');const btn=document.querySelector('.bb-controls .bb-btn:nth-child(2)');if(btn)btn.textContent='Pause';toast('Playing! (Click if blocked)');}function playPrev(){toast('prev');}
+function playYT(){const u=document.getElementById('yt-url').value.trim();const m=u.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);if(!m){toast('Invalid URL');return;}localStorage.setItem('wf_yt',u);const vid=m[1];const el=document.getElementById('ipod-screen');el.innerHTML='<iframe src="https://www.youtube.com/embed/'+vid+'" allowfullscreen style="width:100%;height:100%;border:none;position:relative;z-index:2;background:#000;"></iframe>';el.onclick=function(){window.open('https://www.youtube.com/watch?v='+vid,'_blank');};el.style.cursor='pointer';document.getElementById('sb-music').textContent='YT PLAYING';document.querySelector('.bb-cd')?.classList.remove('paused');const btn=document.querySelector('.bb-play');if(btn)btn.textContent='Pause';toast('Playing! (Click if blocked)');}function playPrev(){toast('prev');}
 function playNext(){toast('next');}
 const MSGS=[['hey bestie!!','omg did u see the new layout??','yessss its so y2k i love it'],['wyd rn?','customizing my avatar for the 50th time...','mood tbh'],['my tamagotchi has a better sleep schedule than me','LMAOOO same','we should feed it'],['remember that embarrassing thing from 2007?','PLS DONT REMIND ME','too late']];
 function rotateBubbles(){const msgs=MSGS[Math.floor(Math.random()*MSGS.length)];const el=document.getElementById('iphone-msgs');if(!el)return;el.innerHTML='';msgs.forEach((m,i)=>{setTimeout(()=>{const d=document.createElement('div');d.className='imsg'+(i%2===0?' reply':'');d.textContent=m;el.appendChild(d);},i*800);});}
