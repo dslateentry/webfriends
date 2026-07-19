@@ -109,7 +109,7 @@ body{
 .start-item span{font-size:14px;}
 
 /* ── MAIN CONTENT ── */
-#app-main{position:absolute;left:185px;top:0;right:0;bottom:0;overflow-y:auto;overflow-x:hidden;padding:8px;}
+#app-main{flex:1;margin-left:185px!important;width:calc(100% - 185px)!important;overflow-y:auto;overflow-x:hidden!important;padding:8px;box-sizing:border-box;min-width:0;}
 
 /* ── SKY BACKGROUND TOGGLE ── */
 body.sky #star-cnv{opacity:.5;}
@@ -243,11 +243,11 @@ body.sky .start-item:hover{background:rgba(255,105,180,.15);}
 .sb-toggle{position:fixed;left:0;top:50%;z-index:955;background:var(--pink);border:2px solid rgba(255,255,255,.4);border-left:none;border-radius:0 6px 6px 0;width:14px;height:50px;cursor:pointer;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;writing-mode:vertical-lr;font-family:'Silkscreen',monospace;transition:all .2s;box-shadow:2px 0 8px rgba(255,20,147,.3);}
 .sb-toggle:hover{background:var(--pink2);}
 body.sb-hidden #sidebar{transform:translateX(-185px);}
-body.sb-hidden #app-main{left:0;}
+body.sb-hidden #app-main{margin-left:0!important;width:100%!important;}
 body.sb-hidden .sb-toggle{left:0;}
 body.sb-hidden #start-menu{left:0;margin-left:10px;}
 #sidebar{transition:transform .3s ease;}
-#app-main{transition:left .3s ease;}
+#app-main{transition:margin-left .3s ease, width .3s ease;}
 
 /* ── AUDIT: better contrast ── */
 .w-popup .w-body{background:#fff;color:#111;}
@@ -855,11 +855,13 @@ function updateDeskItems(){
   const L={x1:sw+120,x2:icx-iw/2-100,y1:250,y2:iy-60};
   const R={x1:icx+iw/2+30,x2:vw-130,y1:250,y2:iy-60};
   const placed=[];
+  const savedPos=JSON.parse(localStorage.getItem('wf_cardPos')||'{}');
   function ov(x,y,w,h){return placed.some(p=>Math.abs(x-p.x)<(w+p.w)/2+15&&Math.abs(y-p.y)<(h+p.h)/2+15);}
   EU.forEach((u,i)=>{
     const card=document.createElement('div');card.className='user-card desk-card';card.style.position='absolute';card.style.pointerEvents='all';
     let x,y;
-    if(i===0){x=sw+3;y=135;}else if(i===1){x=sw+3;y=245;}else if(i===2){x=sw+3;y=355;}
+    if(savedPos[i]){x=savedPos[i].x;y=savedPos[i].y;}
+    else if(i===0){x=sw+3;y=135;}else if(i===1){x=sw+3;y=245;}else if(i===2){x=sw+3;y=355;}
     else{const zone=i%2===0?L:R;let tries=0;do{x=zone.x1+Math.random()*Math.max(0,zone.x2-zone.x1);y=zone.y1+Math.random()*Math.max(0,zone.y2-zone.y1);tries++;}while(ov(x,y,95,105)&&tries<30);}
     placed.push({x,y,w:95,h:105});
     card.style.left=x+'px';card.style.top=y+'px';card.style.zIndex='55';
@@ -874,7 +876,7 @@ function updateDeskItems(){
     d.addEventListener('mousedown',deskPolaroidDrag);d.addEventListener('dblclick',()=>navigateTo('view-album'));document.getElementById('desktop-area').appendChild(d);
   });
 }
-function userCardDrag(e){const card=e.target.closest('.user-card');if(!card)return;card.style.zIndex=75;const ox=e.clientX-card.offsetLeft,oy=e.clientY-card.offsetTop;function mv(ev){card.style.left=(ev.clientX-ox)+'px';card.style.top=(ev.clientY-oy)+'px';}function up(){card.style.zIndex=55;document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);}document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);}
+function userCardDrag(e){const card=e.target.closest('.user-card');if(!card)return;card.style.zIndex=75;const ox=e.clientX-card.offsetLeft,oy=e.clientY-card.offsetTop;function mv(ev){card.style.left=(ev.clientX-ox)+'px';card.style.top=(ev.clientY-oy)+'px';}function up(){card.style.zIndex=55;const idx=Array.from(card.parentNode.children).indexOf(card);if(idx>=0){const saved=JSON.parse(localStorage.getItem('wf_cardPos')||'{}');saved[idx]={x:card.style.left,y:card.style.top};localStorage.setItem('wf_cardPos',JSON.stringify(saved));}document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);}document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);}
 function deskPolaroidDrag(e){const el=e.target.closest('.desk-polaroid');if(!el)return;el.style.zIndex=70;el._dragged=false;const ox=e.clientX-el.offsetLeft,oy=e.clientY-el.offsetTop;function mv(ev){el.style.left=(ev.clientX-ox)+'px';el.style.top=(ev.clientY-oy)+'px';el._dragged=true;}function up(){el.style.zIndex=50;document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);}document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);}
 setTimeout(()=>{document.getElementById('ipod-anchor').style.display='flex';updateDeskItems();const un=localStorage.getItem('wf_username');if(un)document.getElementById('av-username').value=un;},800);
 // Restore saved YouTube & Spotify on load
