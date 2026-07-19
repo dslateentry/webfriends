@@ -371,7 +371,7 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
 
   <!-- VIEW: HOME / DESKTOP (padded for fixed iPod) -->
   <div id="view-home" class="view-panel active">
-    <div id="desktop-area" style="position:relative;height:calc(100vh - 60px);overflow:hidden;">
+    <div id="desktop-area" style="position:relative;min-height:calc(100vh - 60px);padding-bottom:350px;">
       <!-- GIF Polaroid Filmstrip -->
       <div class="filmstrip-wrap">
         <div class="filmstrip-track" id="filmstrip-track"></div>
@@ -383,7 +383,7 @@ body.sb-hidden #start-menu{left:0;margin-left:10px;}
       </div>
       
     <!-- iPod player (inside desktop-area) -->
-<div id="ipod-anchor" style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);z-index:500;display:flex;flex-direction:column;align-items:center;max-width:min(360px, calc(100vw - 220px));padding:12px 0 8px;">
+<div id="ipod-anchor" style="position:relative;margin:0 auto;z-index:500;display:flex;flex-direction:column;align-items:center;max-width:min(360px, calc(100vw - 220px));padding:12px 0 8px;">
 <div class="ipod-player">
   <div class="ipod-label">✦ WebFRIENDS iPod ✦</div>
   <div class="ipod-screen" id="ipod-screen">
