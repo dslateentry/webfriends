@@ -29,6 +29,7 @@ body{
   background-size:400% 400%;
   animation:bgShift 20s ease infinite;
   color:var(--txt);
+  overflow:hidden;
   height:100vh;
   cursor:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><rect x="0" y="0" width="14" height="14" fill="none" stroke="%23ff1493" stroke-width="2"/><rect x="4" y="4" width="2" height="2" fill="%23ff1493"/></svg>') 8 8,auto;
   display:flex;flex-direction:column;
@@ -879,14 +880,9 @@ setTimeout(()=>{document.getElementById('ipod-anchor').style.display='flex';upda
 // Restore saved YouTube & Spotify on load
 setTimeout(()=>{
   const yt=localStorage.getItem('wf_yt');
-  if(yt){
-    document.getElementById('yt-url').value=yt;
-    const btn=document.getElementById('ipod-play');if(btn)btn.textContent='▶';
-    playYT();
-  }
-  const sp=localStorage.getItem('wf_sp');if(sp){document.getElementById('spotify-url').value=sp;embedSpotify();}
+  if(yt){document.getElementById('yt-url').value=yt;}
+  const sp=localStorage.getItem('wf_sp');if(sp){document.getElementById('spotify-url').value=sp;}
 },1000);
-</script>
 
 </body>
 </html>
