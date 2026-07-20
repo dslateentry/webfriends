@@ -10,7 +10,8 @@
 - iPod YouTube (autoplay muteado en restore, con sonido al click)
 - Boombox CD + Spotify embed
 - Fotolog con Supabase Storage (bucket `photos`) + data-attributes + event delegation
-- Fotos compartidas entre usuarios (Supabase Storage)
+- Fotos compartidas entre usuarios (Supabase Storage + Realtime cambios en vivo)
+- Posiciones persistentes de user cards y polaroids
 - Calendario, Foodie, Notepad, Notitas, Foryou
 - User cards + polaroids en escritorio
 - Burbujas iPhone secuenciales

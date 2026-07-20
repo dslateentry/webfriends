@@ -25,10 +25,12 @@
 | `navigateTo(vid)` | SPA routing entre vistas |
 | `doAuth()` | Login/register con Supabase + initAlbum |
 | `loadUserProfile(user)` | Carga username desde BD o metadata |
-| `initAlbum()` | Carga fotos desde tabla `photos` en Supabase + configura event delegation |
-| `uploadCork(e)` | Sube foto a Supabase Storage + inserta metadata en tabla `photos` |
-| `deletePhoto(id)` | Borra foto del bucket + tabla `photos` (solo dueño) |
+| `initAlbum()` | Carga fotos desde Supabase + event delegation + suscripción Realtime |
+| `uploadCork(e)` | Sube foto a Supabase Storage + inserta metadata |
+| `deletePhoto(id)` | Borra foto del bucket + tabla (solo dueño) |
 | `addPhotoCaption(id)` | Actualiza caption en tabla `photos` |
+| `userCardDrag(e)` | Arrastra user cards, guarda posición por nombre (`parseFloat`) |
+| `deskPolaroidDrag(e)` | Arrastra polaroids, guarda posición por ID (`parseFloat`) |
 | `updateUsername()` | Guarda username en localStorage y actualiza UI |
 
 ## Z-Index

@@ -1,4 +1,4 @@
-# Registro de Sesión - WebFRIENDS v12.12
+# Registro de Sesión - WebFRIENDS v12.13
 
 **887 líneas** | Supabase + PeerJS + Vanilla JS
 
@@ -24,11 +24,12 @@ Tamagotchi, Boombox/CD, MSN Chat, TV FaceTime (WebRTC)
 - **iPod**: YouTube con autoplay muteado al recargar, con sonido al click manual
 - **Boombox**: CD player retro + Spotify embed + botón ▶/⏸
 
+## Persistencia
+- **Posiciones**: user cards (por nombre) y polaroids (por ID) guardan posición en localStorage (`parseFloat`)
+- Foto subida/borrado/caption se ve en vivo en todos los usuarios (Supabase Realtime)
+
 ## Layout
 - `#app-main` usa `flex:1;margin-left:185px;position:relative`
-- Sidebar toggle cambia `margin-left:0` / `margin-left:185px` + ajusta iPod `marginLeft`
-- Vistas no-Home: `padding-left:190px` (se quita con sidebar oculto)
-- iPod fuera de `#desktop-area`, centrado en `#app-main` vía `left:50%+translateX(-50%)`
 
 ## Backend
 - Supabase: `https://gtizbvbufskdkemtuems.supabase.co`
