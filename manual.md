@@ -6,12 +6,14 @@
 - `<script>` — JS (~500 líneas): auth, routing, reproductores, desktop, persistencia
 
 ## Layout
-- `#app-main{position:absolute;left:185px;top:0;right:0;bottom:0}` — llena espacio derecho del sidebar
-- `body.sb-hidden #app-main{left:0}` — sidebar oculto expande app-main
+- `#app-main{flex:1;margin-left:185px;position:relative}` — llena espacio derecho del sidebar
+- `body.sb-hidden #app-main{margin-left:0}` — sidebar oculto expande app-main
+- `#app-main{transition:margin-left .3s ease}` — animación al colapsar sidebar
 - `#view-avatar,#view-hub,#view-food,#view-blog,#view-postit,#view-calendar,#view-album{padding-left:190px}` — vistas no-Home
 - `#view-home{padding-left:0!important}` — Home sin padding extra
 - `body.sb-hidden .view-panel{padding-left:0!important}` — padding se quita al ocultar sidebar
 - iPod: fuera de `#desktop-area`, `position:absolute;left:50%;transform:translateX(-50%)` relativo a `#app-main`
+- `toggleSidebar()` ajusta `ipod.style.marginLeft` al ocultar/mostrar sidebar
 
 ## Funciones clave
 | Función | Qué hace |

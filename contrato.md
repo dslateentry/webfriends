@@ -10,10 +10,10 @@
 - Fuentes: Silkscreen, Press Start 2P, Comic Sans MS, VT323
 
 ## Layout
-- `#app-main{position:absolute;left:185px;top:0;right:0;bottom:0}`
-- `body.sb-hidden #app-main{left:0}`
+- `#app-main{flex:1;margin-left:185px;position:relative}`
+- `body.sb-hidden #app-main{margin-left:0}`
 - Non-Home views: `padding-left:190px`
-- iPod: fuera de `#desktop-area`, centrado con `left:50%+translateX(-50%)` relativo a `#app-main`
+- iPod: fuera de `#desktop-area`, centrado con `left:50%+translateX(-50%)` relativo a `#app-main`; `toggleSidebar` ajusta `marginLeft` del iPod
 
 ## Auth
 - Supabase Auth (email + password)
