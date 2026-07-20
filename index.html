@@ -714,17 +714,18 @@ async function doAuth(){
     if(!u){document.getElementById('auth-error').textContent='Pick a username';return;}
     const{data,error}=await sb.auth.signUp({email:e,password:p,options:{data:{username:u}}});
     if(error){document.getElementById('auth-error').textContent=error.message;return;}
-    if(data.user){C=data.user;localStorage.setItem('wf_username',u);document.getElementById('auth-overlay').style.display='none';updateDeskItems();await initAlbum();toast('Welcome, @'+u+'!');}
+    if(data.user){C=data.user;localStorage.setItem('wf_username',u);localStorage.setItem('wf_displayName',u);document.getElementById('auth-overlay').style.display='none';updateDeskItems();await initAlbum();toast('Welcome, @'+u+'!');}
     else{document.getElementById('auth-error').textContent='Check your email. Or disable email confirmation in Supabase > Settings.';}
   }
 }
 async function loadUserProfile(user){
   try{
     const{data}=await sb.from('profiles').select('username').eq('id',user.id).single();
-    if(data?.username){localStorage.setItem('wf_username',data.username);return;}
+    if(data?.username){localStorage.setItem('wf_username',data.username);localStorage.setItem('wf_displayName',data.username);return;}
   }catch(e){}
   const un=user.user_metadata?.username||user.email?.split('@')[0]||'user';
   localStorage.setItem('wf_username',un);
+  localStorage.setItem('wf_displayName',un);
 }
 async function checkSession(){const{data:{session}}=await sb.auth.getSession();if(session){C=session.user;document.getElementById('auth-overlay').style.display='none';await loadUserProfile(C);updateDeskItems();await initAlbum();}else{document.getElementById('auth-overlay').style.display='flex';}}
 setTimeout(checkSession,500);
@@ -759,7 +760,7 @@ function pickGifAvatar(){
   const html=gifPool.map((g,i)=>'<img src="'+g.src+'" style="width:45px;height:45px;object-fit:cover;cursor:pointer;border:2px solid transparent;border-radius:4px;margin:2px;" onclick="selectGifAvatar(\''+g.src+'\')" title="'+g.cap+'">').join('');
   const w=window.open('','_blank','width=400,height=300');w.document.write('<html><head><title>Pick GIF</title><style>body{background:#0a0a14;text-align:center;padding:10px;font-family:sans-serif;color:#ff1493;}</style></head><body><h3>Choose a GIF</h3>'+html+'<br><button onclick="window.close()" style="margin-top:8px;">Close</button><script>function selectGifAvatar(u){opener.localStorage.setItem(\"wf_profile_photo\",u);opener.updateDeskItems();window.close();}<\/script></body></html>');
 }
-function updateUsername(){const u=document.getElementById('av-username').value.trim();if(u){localStorage.setItem('wf_username',u);updateDeskItems();toast('Username updated!');}}function selectGifAvatar(u){localStorage.setItem('wf_profile_photo',u);updateDeskItems();toast('Photo updated!');}
+function updateUsername(){const u=document.getElementById('av-username').value.trim();if(u){localStorage.setItem('wf_displayName',u);updateDeskItems();toast('Username updated!');}}function selectGifAvatar(u){localStorage.setItem('wf_profile_photo',u);updateDeskItems();toast('Photo updated!');}
 function toggleSimsBubbles(e){e.stopPropagation();const el=document.getElementById('sims-bubbles');el.innerHTML='';const opts=['Pose...','Flirt','Call...','Dance!','Taunt','Sing','High Fashion'];opts.forEach((o,i)=>{const b=document.createElement('div');b.className='sims-bubble';b.textContent=o;b.style.position='absolute';b.style.left=(20+(i*55)%280)+'px';b.style.top=(130+(i%3)*40)+'px';b.onclick=ev=>{ev.stopPropagation();toast('✦ '+o+' ✦');el.innerHTML='';};el.appendChild(b);});setTimeout(()=>{el.innerHTML='';},4000);}
 const hubCats=['Music','Podcasts','TV','Movies','Anime','Games'];const hubData={individual:{},group:{}};hubCats.forEach(c=>{hubData.individual[c]=[];hubData.group[c]=[];});let hubMode='individual';
 function initHub(){renderHub();}function hubTab(m){hubMode=m;renderHub();}
@@ -831,9 +832,10 @@ setTimeout(()=>{const v=['gba','gbb','gbc','gbd'];document.querySelectorAll('.ga
 function updateDeskItems(){
   const pp=localStorage.getItem('wf_profile_photo');
   const un=localStorage.getItem('wf_username');
+  const dn=localStorage.getItem('wf_displayName');
   // Priority: 1) localStorage username (set by loadUserProfile or Avatar Studio), 2) email prefix
   const myUname = C ? (un || C.user_metadata?.username || C.email?.split('@')[0] || 'you') : 'angel_bby';
-  const myTitle = un || 'untitled - Paint';
+  const myTitle = dn || un || 'untitled - Paint';
   const EU=[
     {name: myUname, img: pp||'https://i.pinimg.com/originals/68/e3/0c/68e30c98e0c864a77c16a278a49bb230.gif', title: myTitle},
     {name:'angel_bby',img:'https://i.pinimg.com/originals/c1/b7/90/c1b79059622fb0c0cda30a7895ac4fb8.gif',title:'untitled - Paint'},
@@ -876,7 +878,7 @@ function updateDeskItems(){
 }
 function userCardDrag(e){const card=e.target.closest('.user-card');if(!card)return;card.style.zIndex=75;const ox=e.clientX-card.offsetLeft,oy=e.clientY-card.offsetTop;function mv(ev){card.style.left=(ev.clientX-ox)+'px';card.style.top=(ev.clientY-oy)+'px';}function up(){card.style.zIndex=55;const name=card.querySelector('.uc-name')?.textContent.replace('@','');if(name){const saved=JSON.parse(localStorage.getItem('wf_cardPos')||'{}');saved[name]={x:parseFloat(card.style.left),y:parseFloat(card.style.top)};localStorage.setItem('wf_cardPos',JSON.stringify(saved));}document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);}document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);}
 function deskPolaroidDrag(e){const el=e.target.closest('.desk-polaroid');if(!el)return;el.style.zIndex=70;el._dragged=false;const ox=e.clientX-el.offsetLeft,oy=e.clientY-el.offsetTop;function mv(ev){el.style.left=(ev.clientX-ox)+'px';el.style.top=(ev.clientY-oy)+'px';el._dragged=true;}function up(){el.style.zIndex=50;const pid=el.dataset.pid;if(pid){const sp=JSON.parse(localStorage.getItem('wf_polaPos')||'{}');sp[pid]={x:parseFloat(el.style.left),y:parseFloat(el.style.top)};localStorage.setItem('wf_polaPos',JSON.stringify(sp));}document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);}document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);}
-setTimeout(()=>{document.getElementById('ipod-anchor').style.display='flex';updateDeskItems();const un=localStorage.getItem('wf_username');if(un)document.getElementById('av-username').value=un;},800);
+setTimeout(()=>{document.getElementById('ipod-anchor').style.display='flex';updateDeskItems();const dn=localStorage.getItem('wf_displayName')||localStorage.getItem('wf_username');if(dn)document.getElementById('av-username').value=dn;},800);
 // Restore saved YouTube & Spotify on load
 setTimeout(()=>{
   const yt=localStorage.getItem('wf_yt');
