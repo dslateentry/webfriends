@@ -1,6 +1,6 @@
 # WebFRIENDS — Manual Técnico
 
-## Estructura (index.html, 887 líneas)
+## Estructura (index.html, 889 líneas)
 - `<style>` — CSS (~350 líneas): variables, sidebar, vistas, popups, reproductores, widgets, layout
 - `<body>` — HTML: auth overlay, canvas, 8 vistas, sidebar, 4 popups, widgets flotantes, iPod
 - `<script>` — JS (~500 líneas): auth, routing, reproductores, desktop, persistencia
@@ -31,7 +31,7 @@
 | `addPhotoCaption(id)` | Actualiza caption en tabla `photos` |
 | `userCardDrag(e)` | Arrastra user cards, guarda posición por nombre (`parseFloat`) |
 | `deskPolaroidDrag(e)` | Arrastra polaroids, guarda posición por ID (`parseFloat`) |
-| `updateUsername()` | Guarda username en localStorage y actualiza UI |
+| `updateUsername()` | Guarda `wf_displayName` en localStorage (display name ≠ login @name) |
 
 ## Z-Index
 - `-2 a 5`: fondos, estrellas, tape
