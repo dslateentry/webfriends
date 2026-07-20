@@ -9,7 +9,8 @@
 - Avatar Paper Doll Bratz (F/M/X) + Sims 2 bubbles + profile photo
 - iPod YouTube (autoplay muteado en restore, con sonido al click)
 - Boombox CD + Spotify embed
-- Fotolog con persistencia localStorage + delete + captions
+- Fotolog con Supabase Storage (bucket `photos`) + data-attributes + event delegation
+- Fotos compartidas entre usuarios (Supabase Storage)
 - Calendario, Foodie, Notepad, Notitas, Foryou
 - User cards + polaroids en escritorio
 - Burbujas iPhone secuenciales
@@ -21,6 +22,5 @@
 - 3 temas (Night/Sky toggle)
 
 ## TO-DO
-- [ ] Fotos compartidas entre usuarios (Supabase Storage)
 - [ ] Chat en tiempo real (Supabase Realtime)
 - [ ] Minijuegos en Arcade

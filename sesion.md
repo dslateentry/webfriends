@@ -1,6 +1,6 @@
-# Registro de Sesión - WebFRIENDS v12.11
+# Registro de Sesión - WebFRIENDS v12.12
 
-**885 líneas** | Supabase + PeerJS + Vanilla JS
+**887 líneas** | Supabase + PeerJS + Vanilla JS
 
 ## Vistas SPA (8)
 | Vista | ID |
@@ -33,7 +33,8 @@ Tamagotchi, Boombox/CD, MSN Chat, TV FaceTime (WebRTC)
 ## Backend
 - Supabase: `https://gtizbvbufskdkemtuems.supabase.co`
 - Auth: login/register con email + loadUserProfile
-- localStorage: fotos, username, avatar, tamagotchi, URLs reproductores
+- **Fotos**: Supabase Storage (bucket `photos`) + tabla `photos` con RLS
+- localStorage: username, avatar, tamagotchi, URLs reproductores
 
 ## URL
 https://dslateentry.github.io/webfriends/

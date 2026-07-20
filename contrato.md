@@ -25,7 +25,8 @@
 - Spotify: iframe embed
 
 ## Persistencia
-- localStorage: fotos (corkPhotos), username, avatar, tamagotchi, URLs
+- Supabase Storage: fotos (bucket `photos`) + tabla `photos` con RLS (todos leen, dueño edita/borra)
+- localStorage: username, avatar, tamagotchi, URLs
 - Supabase: auth y perfiles
 
 ## Reglas
