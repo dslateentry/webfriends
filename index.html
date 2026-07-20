@@ -869,7 +869,7 @@ function updateDeskItems(){
     const d=document.createElement('div');d.className='desk-polaroid desk-card';d.style.position='absolute';d.style.pointerEvents='all';
     const maxX=icx-iw/2-110;const x=Math.min(sw+120+(i*100)%400,maxX);const y=260+(i*60)%(iy-340);
     d.style.left=x+'px';d.style.top=y+'px';d.style.zIndex='50';d.style.setProperty('--r',((i%5)-2)*3+'deg');
-    d.innerHTML='<img class="dp-img" src="'+p.url+'"><div class="dp-cap">'+(p.caption||'recent')+'</div>';
+    d.innerHTML='<img class="dp-img" src="'+p.url+'"><div class="dp-cap">'+(p.caption||(p.created_at?new Date(p.created_at).toLocaleDateString():'recent'))+'</div>';
     d.addEventListener('mousedown',deskPolaroidDrag);d.addEventListener('dblclick',()=>navigateTo('view-album'));document.getElementById('desktop-area').appendChild(d);
   });
 }
